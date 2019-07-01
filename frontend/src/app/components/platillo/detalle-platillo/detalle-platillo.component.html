@@ -1,0 +1,105 @@
+<section class="ui-view-more vip-section-specs main-section">
+    <h2 class="main-section__title">
+    </h2>
+      
+      <div class="description-content-main-group attribute-content">
+          
+          <div class="card-section">
+              
+          <div class="container z-depth-2 col-7 left" >
+          <img src="{{platilloService.platillo?.imagen}}" width="100%"> 
+          </div>
+          
+          <div class="specs-wrapper">
+          <section class="specs-container specs-layout-alternate">
+            <ul class="specs-list">
+           
+            <li class="specs-item"> 
+              <strong>Linea</strong>
+              <span> {{platilloService.platillo?.linea}}</span>
+            </li>
+            
+            <li class="specs-item">
+              <strong>Modelo</strong>
+              <span> {{platilloService.platillo?.modelo}}</span>
+            </li>
+                  
+            <li class="specs-item">
+              <strong>Aleación</strong>
+              <span> {{platilloService.platillo?.aleacion}}</span>
+            </li>
+                  
+            <li class="specs-item">
+              <strong>Diametro</strong>
+              <span>{{platilloService.platillo?.diametro}}</span>
+            </li>
+                  
+            <li class="specs-item">
+              <strong>Descripción</strong>
+              <span> {{platilloService.platillo?.descripcion}}</span>
+            </li>
+              
+            <li class="specs-item">
+              <strong>Stock</strong>
+              <span> {{platilloService.platillo?.stock}}</span>
+            </li>
+            
+            <li class="specs-item">
+              <strong>Precio </strong>
+              <span> {{platilloService.platillo?.precio}}</span>
+            </li>
+            
+            <li class="specs-item">
+              <strong>Categoria </strong>
+              <span>{{platilloService.platillo?.categoria}}</span>
+            </li>
+
+            </ul>
+            <div>
+              <h6>Cantidad </h6>
+              <input mdbInput type="number" value="1"  style="width:40px;height:30px" >
+              <button mdbBtn type="button" (click)="agregarAlCarrito()" color="success" mdbWavesEffect><mdb-icon fas icon="shopping-cart"></mdb-icon> Agregar al carrito</button>
+            
+          </div>
+          </section>
+          
+<hr> 
+<section>
+<h3>¿Querés preguntar algo?</h3>
+
+
+<div class="md-form md-outline" align="right">
+  <textarea type="text" id="form75" class="form-control md-textarea" rows="3" mdbInput name="consultaTexto" #consultaTexto="ngModel" [(ngModel)]="consultaService.selectedConsulta.consulta"></textarea>
+  <label for="form75">Escribí una pregunta...</label>
+  <button type="click" (click)="preguntar(consultaTexto)" class="btn btn-primary btn-md mt-0 ml-auto">Preguntar</button>
+</div>
+
+</section>
+
+ 
+
+
+<section>
+    
+<h3>Ultimas preguntas</h3>
+  <mdb-card *ngFor="let consulta of consultaService.consultas" style="margin-bottom: 5px">
+    <mdb-card-body>
+      
+      <mdb-card-title>
+        <h5>{{consulta.nombre_usuario}}</h5>
+      </mdb-card-title>
+      
+      <mdb-card-text>
+        {{consulta.consulta}}
+      </mdb-card-text>
+      <p>{{consulta.respuesta}}</p>
+
+      
+
+    </mdb-card-body>
+  </mdb-card>
+
+
+</section>
+
+

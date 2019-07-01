@@ -1,0 +1,160 @@
+<div class="container">
+  <div class="row">
+    <div class="col s5">
+      <div class="card ">
+        <div class="card-content ">
+
+        <form class="text-center border border-light p-5" #usuarioForm="ngForm" (ngSubmit)="registrarUsuario(usuarioForm)" action=""> 
+          <div class="row">
+            <div class="md-form">
+            
+            <div class="input-field">
+                <input mdbInput type="text" id="nUser" class="form-control mb-4" name="nombre_usuario" #nombre_usuario="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre_usuario" 
+                        minlength="8" maxlength="20" required>
+                <label for="nUser">Nombre de Usuario</label>
+                <div>
+                  <div *ngIf="nombre_usuario.touched && !nombre_usuario.valid">
+                    <div *ngIf="nombre_usuario.errors.required">Ingrese un nombre de usuario.</div>
+                    <div *ngIf="nombre_usuario.errors.minlength">Nombre de usuario debe ser de al menos {{nombre_usuario.errors.minlength.requiredLength}} caracteres.</div>
+                  </div>
+                </div>
+            
+                <div class="md-form">
+            <input mdbInput id="pass" type="password" class="form-control mb-4" name="contrasenia" #contrasenia="ngModel" [(ngModel)]="usuarioService.selectedUsuario.contrasenia" 
+             required>
+            <label for="pass">Contraseña</label> 
+                  </div>
+
+                  <div class="md-form">      
+            <input mdbInput type="password" id="pass2" class="form-control mb-4" name="contraseniaVerificada">
+            <label for="pass2">Repita la contraseña</label>
+                  </div>
+                  <div class="md-form">
+            <input mdbInput type="text" id="nombre" class="form-control mb-4" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre" 
+             minlength="8" maxlength="20" required>
+            <label for="nombre">Nombre</label>
+                  </div>
+            <div>
+              <div *ngIf="nombre.touched && !nombre.valid">
+                <div *ngIf="nombre.errors.required">Por favor ingrese su nombre</div>
+              </div>
+            </div>
+            <div class="md-form">
+            <input mdbInput type="email" id="email" class="form-control mb-4" name="email" #email="ngModel" [(ngModel)]="usuarioService.selectedUsuario.email" 
+             pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" required>
+            <label for="email">Email</label>
+            <div *ngIf="email.touched && !email.valid">
+              <div *ngIf="email.errors.required">Ingrese un correo.</div>
+              <div *ngIf="email.errors.pattern">Ingrese un email valido.</div>
+            </div>
+            </div>
+            <div class="md-form">
+            <input mdbInput type="text" id="cp" class="form-control mb-4" name="codigopostal" #codigopostal="ngModel" [(ngModel)]="usuarioService.selectedUsuario.codigopostal" required>
+            <label for="cp">Codigo postal</label>
+            <div *ngIf="codigopostal.touched && !codigopostal.valid">
+              <div *ngIf="codigopostal.errors.required">Ingrese un codigo postal.</div>
+            </div>
+            </div>
+<!--            <input type="number" class="form-control mb-4" name="dni" #dni="ngModel" [(ngModel)]="usuarioService.selectedUsuario.dni" 
+            placeholder="DNI">   
+-->
+<div class="md-form">
+            <input mdbInput type="number" class="form-control mb-4" name="tel" #tel="ngModel" [(ngModel)]="usuarioService.selectedUsuario.tel" 
+            placeholder="Numero de telefono">
+</div>
+            <div class="card-action">
+                <div class="input-field col-s12">
+                  <button class="btn red">Cancelar</button>
+                  <button class="btn right green">Registrarse</button>
+                </div>
+            </div>
+          </div>
+          </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
+
+<!--
+<section id="register" class="mb-5 mt-5">
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+        <div class="card_register">
+          <div class="card">
+            <div class="card-body text-center">
+              
+              
+              <form #formRegister="ngForm" (ngSubmit)="onAddUser()">
+                <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+                <div class="alert alert-danger" role="alert" *ngIf="isError">
+                  {{msgError}}
+                </div>
+                <div class="form-group">
+                  <input type="email" name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required minlength="8">
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="email.touched && !email.valid">
+                  <div *ngIf="email.errors.required">Email is required</div>
+                  <div *ngIf="email.errors.minlength">Email must be at least 8 characters</div>
+                </div>
+                <div class="form-group">
+                  <input type="password" name="password" class="form-control" placeholder="Password" [(ngModel)]="password" required minlength="5"
+                    maxlength="10">
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="password.touched && !password.valid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">Password must be at least 5 characters</div>
+                </div>
+                <hr>
+                <div class="form-group">
+                  <h5>Seleccionar image:</h5>
+                  <input type="file" accept=".png, .jpg" (change)="onUpload($event)">
+                </div>
+                <div class="progress">
+                  <div [style.visibility]="(uploadPercent == 0) ? 'hidden' : 'visible'" class="progress-bar progress-bar-striped bg-success"
+                    role="progressbar" [style.width]="(uploadPercent | async) +'%'">
+
+                    <span class="progressText" *ngIf="urlImage | async">
+                      Ok!!</span>
+                  </div>
+                </div>
+                <br>
+                <input #imageUser type="hidden" [value]="urlImage | async">
+                <button *ngIf="urlImage | async; else btnDisabled" type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+                <ng-template #btnDisabled>
+                  <button type="submit" disabled=true class="btn btn-lg btn-secondary btn-block">Register</button>
+                </ng-template>
+                <div class="form-group">
+                  <a routerLink="/user/login" class="form-control login-user">Do you have account?</a>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-block btn-social btn-facebook" (click)="onLoginFacebook()">
+                    <span class="fa fa-facebook"></span>
+                    FACEBOOK
+                  </button>
+                  <button class="btn btn-block btn-social btn-google" (click)="onLoginGoogle()">
+                    <span class="fa fa-google"></span>
+                    GOOGLE
+                  </button>
+                </div>
+              </form>
+
+            
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+-->

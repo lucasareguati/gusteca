@@ -1,0 +1,37 @@
+
+<div class="card-deck">
+    <!-- Card -->
+    <ng-container *ngFor="let platillo of platilloService.platillos">
+      <ng-container *ngIf="!platillo.baja">
+        <div class="alinear"> 
+        <mdb-card >
+        <div class="view rgba-white-slight waves-light"  mdbWavesEffect>
+        <!-- Card img -->
+        <mdb-card-img src="{{platillo.imagen}}" alt="Card image cap"></mdb-card-img>
+        <a>
+          <div class="mask"></div>
+        </a>
+      </div>
+      <!--Card content-->
+      <mdb-card-body>
+        <!--Title-->
+        <mdb-card-title>
+          <h4>${{platillo.precio}}</h4>
+        </mdb-card-title>
+  
+        <!--Text-->
+        <mdb-card-text>
+          {{platillo.linea}}, {{platillo.modelo}}, {{platillo.marca}}, {{platillo.aleacion}}
+        </mdb-card-text>
+  
+        <button (click)="verPlatillo(platillo.id_platillo)"
+        type="button" class="btn btn-outline-primary btn-block">
+        Ver más...
+        </button>
+      </mdb-card-body>
+  
+    </mdb-card>
+  </div>
+    </ng-container>
+  </ng-container>
+  </div>

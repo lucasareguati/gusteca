@@ -1,0 +1,208 @@
+
+
+<table id="contentToConvert" class="table table-striped">
+    
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Linea</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Aleación</th>
+        <th scope="col">Diametro</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Operación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let platillo of platilloService.platillos">
+        <th scope="row">{{platillo.id_platillo}}</th>
+        <td>{{platillo.linea}}</td>
+        <td>{{platillo.modelo}}</td>
+        <td>{{platillo.aleacion}}</td>
+        <td>{{platillo.diametro}} "</td>
+        <td>{{platillo.marca}}</td>
+        <td>
+          <a (click)="editarPlatillo(platillo)" (click)="frame.show()"> 
+            <i class="material-icons">edit</i> 
+          </a>
+
+          <a  *ngIf="platillo.baja ; else bajaIcon" (click)="editarPlatillo(platillo)" (click)="altaModal.show()"  >
+              <i class="material-icons">add_circle</i>
+          </a>
+            
+
+          <ng-template #bajaIcon>
+          <a (click)="editarPlatillo(platillo)" (click)="bajaModal.show()"> 
+              <i class="material-icons">delete</i> 
+            </a>
+          </ng-template>
+             
+            
+
+        </td>
+      </tr>
+    </tbody>
+</table>
+
+
+<div id="content" #content> 
+    <mat-card> 
+   <div>
+    <input type="button" value="Descargar" mdbBtn color="secondary" class="waves-light" (click)="generatePDF()"/> 
+    </div> 
+    </mat-card> 
+   </div> 
+
+
+<!--Baja-->
+
+<div mdbModal #bajaModal="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Baja platillo</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="bajaModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+          <p>Desea dar de baja el platillo {{platilloService.selectedPlatillo.linea}}, {{platilloService.selectedPlatillo.modelo}}, {{platilloService.selectedPlatillo.aleacion}}, {{platilloService.selectedPlatillo.aleacion}}", {{platilloService.selectedPlatillo.diametro}}</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="bajaModal.hide()" mdbWavesEffect>Cancelar</button>
+          <button mdbBtn  type="button"  (click)="bajaOAltaPlatillo()" (click)="bajaModal.hide()" class="btn right relative green" >Dar de baja</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+
+
+<div mdbModal #frame="mdbModal" style="overflow-y: auto" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Editar platillo</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #editarForm="ngForm" (ngSubmit)="guardarEdicionPlatillo(editarForm)">
+      <div class="modal-body mx-3">
+        
+        <input type="number" id="id_platillo" name="id_platillo" #id_platillo="ngModel" [(ngModel)]="platilloService.selectedPlatillo.id_platillo"  style="visibility:hidden">
+
+          <div class="md-form mb-5">
+            <input mdbInput type="text" class="form-control validate" id="linea" name="linea" #linea="ngModel"  [(ngModel)]="platilloService.selectedPlatillo.linea">
+            <label data-error="wrong" data-success="right" for="linea">Linea</label>
+          </div>
+ 
+          <div class="md-form mb-5" >
+              <input mdbInput  type="text" class="form-control validate" name="modelo" #modelo="ngModel" [(ngModel)]="platilloService.selectedPlatillo.modelo">
+              <label data-error="wrong" data-success="right">Modelo</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput  type="text" class="form-control validate" name="aleacion" #aleacion="ngModel" [(ngModel)]="platilloService.selectedPlatillo.aleacion">
+              <label data-error="wrong" data-success="right">Aleación</label>
+          </div>
+    
+          <div class="md-form mb-5" >
+              <input mdbInput type="number" class="form-control validate" name="diametro" #diametro="ngModel" [(ngModel)]="platilloService.selectedPlatillo.diametro">
+              <label data-error="wrong" data-success="right">Diametro</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput type="text"  class="form-control validate" rows="5" name="descripcion" #descripcion="ngModel" [(ngModel)]="platilloService.selectedPlatillo.descripcion">
+              <label data-error="wrong" data-success="right">Descripción</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput type="number" class="form-control validate" name="stock" #stock="ngModel" [(ngModel)]="platilloService.selectedPlatillo.stock">
+              <label data-error="wrong" data-success="right">Stock</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput type="text" class="form-control validate" name="precio" #precio="ngModel" [(ngModel)]="platilloService.selectedPlatillo.precio">
+              <label data-error="wrong" data-success="right">Precio</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput type="text" class="form-control validate" name="marca" #marca="ngModel" [(ngModel)]="platilloService.selectedPlatillo.marca">
+              <label data-error="wrong" data-success="right">Modelo</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput type="text" class="form-control validate" name="categoria" #categoria="ngModel" [(ngModel)]="platilloService.selectedPlatillo.categoria">
+              <label data-error="wrong" data-success="right">Categoria</label>
+          </div>
+
+
+
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+       
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="frame.hide()" mdbWavesEffect>Close</button>
+        <button mdbBtn  type="button"  (click)="guardarEdicionPlatillo(editarForm)" (click)="frame.hide()" class="btn right relative green">Guardar</button>
+
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--AltaModal-->
+
+
+
+<div mdbModal #altaModal="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Baja platillo</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="altaModal.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+          <p>Desea dar de alta el platillo {{platilloService.selectedPlatillo.linea}}, {{platilloService.selectedPlatillo.modelo}}, {{platilloService.selectedPlatillo.aleacion}}, {{platilloService.selectedPlatillo.aleacion}}", {{platilloService.selectedPlatillo.diametro}}</p>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+          <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="altaModal.hide()" mdbWavesEffect>Cancelar</button>
+          <button mdbBtn  type="button"  (click)="bajaOAltaPlatillo()" (click)="altaModal.hide()" class="btn right relative green" >Dar de alta</button>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+

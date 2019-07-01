@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="row"> 
+    <div class="col s5">
+      <div class="card"> 
+        <div class="card-content">
+          <form class="text-center border border-light p-5" #platilloForm="ngForm" (ngSubmit)="addPlatillo(platilloForm)" enctype="multipart/form-data">
+            <div class="row">
+              <div class="input-field ">
+                <div class="md-form form-sm">
+                <input mdbInput id="linea" class="form-control mb-4" type="text" name="linea" #linea="ngModel" [(ngModel)]="platilloService.selectedPlatillo.linea" required>
+                <label for="linea">Linea</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="modelo" class="form-control mb-4" type="text" name="modelo" #modelo="ngModel" [(ngModel)]="platilloService.selectedPlatillo.modelo" required>
+                <label for="modelo">Modelo</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="aleacion" class="form-control mb-4" type="text" name="aleacion" #aleacion="ngModel" [(ngModel)]="platilloService.selectedPlatillo.aleacion" required>
+                <label for="aleacion">Aleación</label>
+                </div>
+
+                <div  class="md-form form-sm">
+                <input mdbInput id="diametro" class="form-control mb-4" type="text" name="diametro" #diametro="ngModel" [(ngModel)]="platilloService.selectedPlatillo.diametro" required>
+                <label for="diametro">Diametro</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="desc" class="form-control mb-4" type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="platilloService.selectedPlatillo.descripcion" required>
+                <label for="desc">Descripción</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="stock" class="form-control mb-4" type="number" name="stock" #stock="ngModel" [(ngModel)]="platilloService.selectedPlatillo.stock" required>
+                <label for="stock">Stock</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="precio" class="form-control mb-4" type="number" name="precio" #precio="ngModel" [(ngModel)]="platilloService.selectedPlatillo.precio" required>  
+                <label for="precio">Precio</label>
+                </div>
+
+                <div class="md-form form-sm">
+                <input mdbInput id="marca" class="form-control mb-4" type="text" name="marca" #marca="ngModel" [(ngModel)]="platilloService.selectedPlatillo.marca" required>
+                <label for="marca">Marca</label>
+                </div>
+
+
+                <div class="md-form form-sm">
+                <input mdbInput id="categoria" pattern="Hit-Hat|Ride|Crash" class="form-control mb-4" type="text" name="categoria" #categoria="ngModel" [(ngModel)]="platilloService.selectedPlatillo.categoria" required>
+                <label for="categoria">Categoria</label>
+                <div *ngIf="categoria.touched && !categoria.valid">
+                  <div *ngIf="categoria.errors.pattern">Categorias disponibles: Hit-Hat, Ride y Crash.</div>
+                </div>
+                </div>
+
+                <hr>
+
+                <input type="file" accept=".png, .jpg, .jpeg"  (change)="onUpload($event)">
+                <input style="display: none" type="text" name="imagen" #imagenPlatillo [value]="(urlImage | async)" [(ngModel)]="platilloService.selectedPlatillo.imagen" 
+                placeholder="URL de imagen">
+                
+                <hr>
+
+                <div class="progress">
+                  <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadPercent | async) + '%'">
+                  </div>
+                </div>
+                
+                <div class="card-action">
+                  <div class="input-field col-s12">
+                    <button class="btn blue" (click)="limpiarForm(platilloForm)">Limpiar</button>
+                    <button class="btn right green">Guardar</button>
+                  </div>
+                </div>
+            </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <div class="col s7"></div>
+  </div>
+</div>

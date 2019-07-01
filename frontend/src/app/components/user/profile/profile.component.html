@@ -1,0 +1,110 @@
+<section id="profile" class="container">
+  <div class="row mt-5">
+    <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center card">
+      <div class="row">
+        <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
+      </div>
+      <div class="row user-details">
+          <a (click)="frame.show()" (click)="editarUsuario(usuario)"> 
+              <i class="material-icons">edit</i> Editar perfil
+            </a>
+        <div class="col-12">
+          <h3>{{usuario.nombre_usuario}}</h3>
+          
+          <h4>{{usuario.nombre}}</h4>
+          <h4>{{usuario.email}}</h4>
+
+          <hr>
+          <span>{{usuario.tel}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<div mdbModal #frame="mdbModal" style="overflow-y: auto" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Editar usuario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form #editarUForm="ngForm">
+      <div class="modal-body mx-3">
+        
+        <input type="number" id="id_usuario" name="id_usuario" #id_usuario="ngModel" [(ngModel)]="usuarioService.usuarioLogueado.id_usuario"  style="visibility:hidden">
+
+          <div class="md-form mb-5">
+            <input mdbInput type="text" class="form-control validate" id="nombre_usuario" name="nombre_usuario" #linea="ngModel"  [(ngModel)]="usuarioService.usuarioLogueado.nombre_usuario">
+            <label data-error="wrong" data-success="right" for="linea">Nombre de usuario</label>
+          </div>
+ 
+          <div class="md-form mb-5" >
+              <input mdbInput  type="text" class="form-control validate" name="email" #email="ngModel" [(ngModel)]="usuarioService.usuarioLogueado.email">
+              <label data-error="wrong" data-success="right">Email</label>
+          </div>
+
+          <div class="md-form mb-5" >
+              <input mdbInput  type="text" class="form-control validate" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioService.usuarioLogueado.nombre">
+              <label data-error="wrong" data-success="right">Nombre</label>
+          </div>
+    
+          <div class="md-form mb-5" >
+              <input mdbInput type="number" class="form-control validate" name="tel" #tel="ngModel" [(ngModel)]="usuarioService.usuarioLogueado.tel">
+              <label data-error="wrong" data-success="right">Telefono</label>
+          </div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+       
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="frame.hide()" mdbWavesEffect>Close</button>
+        <button mdbBtn  type="button"  (click)="guardarEdicionUsuario(editarUForm)" (click)="frame.hide()" class="btn right relative green">Guardar</button>
+
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<h3>Carro </h3>
+
+<table mdbTable striped="true">
+  <thead>
+    <tr>
+      <th>Modelo</th>
+      <th>Linea</th>
+      <th>Diametro</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr mdbTableCol *ngFor="let carrito of carritoService.carritos">
+      <td>{{carrito.modelo}}</td>
+      <td>{{carrito.linea}}</td>
+      <td>{{carrito.diametro}}</td>
+      <td>{{carrito.cantidad}}</td>
+      <td>{{carrito.precio}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!--
+<section>
+  <mdb-card class="w-75 mb-3" *ngFor="let carrito of carritoService.carritos">
+    <mdb-card-body>
+      <mdb-card-title>
+        <h5>{{carrito.modelo}} {{carrito.linea}} {{carrito.diametro}}"  {{carrito.cantidad}} ${{carrito.precio}}</h5>
+      </mdb-card-title>
+      
+    </mdb-card-body>
+  </mdb-card>
+
+
+</section>
+-->

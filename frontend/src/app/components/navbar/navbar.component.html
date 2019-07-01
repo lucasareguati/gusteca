@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+  <a class="navbar-brand" routerLink="/">{{app_name}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNavbar">
+    <ul class="navbar-nav mr-auto">
+      Logueado : {{isLogged}}
+    </ul>
+     
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item" *ngIf="!isLogged">
+        <a class="nav-link" routerLink="/user/register">Registrarse
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged">
+        <a class="nav-link" routerLink="/user/profile">Perfil</a>
+      </li>
+      <li class="dropdown" mdbDropdown>
+      <!--  <div class="dropdown" mdbDropdown>-->
+        <a class="nav-link" mdbDropdownToggle *ngIf="isAdmin">Menú administración</a>
+          <!--<button mdbDropdownToggle mdbBtn color="primary" class="dropdown-toggle waves-light" type="button"
+            mdbWavesEffect>
+            Dropdown primary
+          </button> -->
+        
+          <div class="dropdown-menu dropdown-primary">
+            <button class="dropdown-item"routerLink="/admin/editar-platillo">Editar platillo</button>
+            <button class="dropdown-item" routerLink="/admin/cargar-platillo">Cargar platillo</button>
+          </div>
+       <!-- </div> -->
+      </li>
+      <!--
+      <li class="nav-item" *ngIf="isAdmin">
+        <a class="nav-link" routerLink="/admin/cargar-platillo">Cargar Platillo</a>
+      </li>
+      -->
+      <li class="nav-item" *ngIf="!isLogged">
+        <a class="nav-link" routerLink="/user/login">Iniciar Sesión
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="isLogged">
+        <a href="#" class="nav-link" (click)="onLogout()">Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
