@@ -22,7 +22,9 @@ clienteCtrl.getUsuario = async (req, res) => {
 }
 
 clienteCtrl.createUsuario = async(req, res) => {
-    await Cliente.create(req.body);
+    await Cliente.create(req.body).catch(err => {
+        console.log('Error: ' + err);
+    });
     res.send({
         status: "Creado correctamente"
     });

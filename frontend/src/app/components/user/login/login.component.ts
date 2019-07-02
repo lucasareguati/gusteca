@@ -13,7 +13,7 @@ import { Usuario } from 'src/app/models/usuario';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
-})
+}) 
 export class LoginComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
@@ -23,30 +23,36 @@ export class LoginComponent implements OnInit {
   public userLogueado: Usuario = this.usuarioService.usuarioLogueado;
   public email = '';
   public pass = '';
+  public error = false;
+  public mensajeErr;
+  private verificado = true;
 
   ngOnInit() {
   }
 
   onLogin(): void {
-    this.authService.loginEmailUser(this.email, this.pass).then((res ) => { // autenticacion con firebase
-      this.usuarioService.getUsuario('/' + this.email).subscribe( res => { // consulta a la BBDD
-        console.log(res[0]); // En la posicion 0 de la respuesta se encuentra el objeto
-        this.usuarioService.usuarioLogueado = res[0] as Usuario;
-        this.router.navigate(['/']); // navega a la ruta /
-        console.log(this.usuarioService.usuarioLogueado);
-      });
 
-    }).catch(err => {
-      console.log('Ha ocurrido un error: ', err.message);
-      //  M.toast({html: err.message});
-    });
-  }
+      this.authService.loginEmailUser(this.email, this.pass).then((res ) => { // autenticacion con firebase
+        const user = auth().currentUser;
+        if (user.emailVerified.valueOf()) {
+        this.usuarioService.getUsuario('/' + this.email).subscribe( res => { // consulta a la BBDD
+          console.log(res[0]); // En la posicion 0 de la respuesta se encuentra el objeto
+          this.usuarioService.usuarioLogueado = res[0] as Usuario;
+          this.router.navigate(['/']); // navega a la ruta /
+          console.log(this.usuarioService.usuarioLogueado);
+        });
+      } else {
+        this.verificado = false;
+        this.authService.logoutUser();
+      }
+      }).catch(err => {
+        this.error = true;
+        this.mensajeErr = err.message;
+        console.log('Ha ocurrido un error: ', err.message);
+      });
+    }
 
   onLoginFacebook() {
-    // this.authService.loginFacebookUser().then((res) => {
-     // this.router.navigate(['/']);
-      // console.log(res);
-   // }).catch(err => console.log('Error: ', err.message));
     this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider()).then( res => {
       console.log('Logueado correctamente con Facebook');
       this.verificar();
@@ -57,11 +63,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLoginGoogle() {
-    // this.authService.loginGoogleUser().then((res) => {
-      // this.router.navigate(['/']); // Verificar
-      // console.log(auth().currentUser);
-    // }).catch(err => console.log('Error: ', err.message));
-
     this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(res =>  {
       console.log('Logueado correctamente');
       this.verificar();
@@ -73,6 +74,7 @@ export class LoginComponent implements OnInit {
 
   verificar() { // Si ya inicio sesion lo trae de la BBDD sino lo registra
     const user = auth().currentUser;
+    
       console.log(user.displayName, user.email);
       this.usuarioService.getUsuario('/' + user.email).subscribe( res => {
         this.usuarioService.usuarioLogueado = res[0] as Usuario;

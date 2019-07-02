@@ -7,12 +7,8 @@ import {AngularFireAuth  } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import { auth } from 'firebase';
-
-
 import 'firebase/auth';
 
-
-// declare var M: any;
 
 @Component({
   selector: 'app-register',
@@ -27,12 +23,14 @@ export class RegisterComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private authService: AuthService, private http: HttpClient, private usuarioService: UsuarioService, private afsauth: AngularFireAuth) { }
+    public error = false;
+    public mensajeErr;
 
-  ngOnInit() {
+   ngOnInit() {
   }
 
   registrarUsuario(form: NgForm) {
-    // Validar antes con form.valid
+
     this.afsauth.auth.createUserWithEmailAndPassword(form.value.email, form.value.contrasenia).then( () => {
       this.usuarioService.postUsuario(form.value) // guarda en la base de datos
         .subscribe( async res => {
@@ -42,13 +40,17 @@ export class RegisterComponent implements OnInit {
           user.sendEmailVerification().then( () => {
             console.log('Verifica tu correo: ', user.email);
           }).catch(err => {
+
             console.log('Error: ', err);
           });
-          // M.toast({html: 'Verifique su email'});
           this.authService.logoutUser();
           this.router.navigate(['/']);
     });
 
+    }).catch(err => {
+      this.error = true;
+      this.mensajeErr = err;
+      console.log('Error: ' + err);
     });
   }
 }
