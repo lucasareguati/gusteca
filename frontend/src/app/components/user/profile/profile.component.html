@@ -15,7 +15,7 @@
           <h4>{{usuario.email}}</h4>
 
           <hr>
-          <span>{{usuario.tel}}</span>
+          <span>{{usuario.tel}}</span> 
         </div>
       </div>
     </div>
@@ -81,6 +81,7 @@
       <th>Diametro</th>
       <th>Cantidad</th>
       <th>Precio</th>
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
@@ -89,7 +90,8 @@
       <td>{{carrito.linea}}</td>
       <td>{{carrito.diametro}}</td>
       <td>{{carrito.cantidad}}</td>
-      <td>{{carrito.precio}}</td>
+      <td>${{carrito.precio}}</td>
+      <td>${{carrito.cantidad * carrito.precio}}</td>
     </tr>
   </tbody>
 </table>

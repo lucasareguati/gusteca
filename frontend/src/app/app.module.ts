@@ -23,7 +23,6 @@ import { AdminComponent } from './components/admin/admin.component';
 import { EditarPlatilloComponent } from './components/admin/editar-platillo/editar-platillo.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FooterComponent } from './components/footer/footer.component';
-import { CarroComponent } from './models/carro/carro.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
@@ -45,7 +44,6 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AdminComponent,
     EditarPlatilloComponent,
     FooterComponent,
-    CarroComponent,
     UsersComponent,
   ],
   imports: [

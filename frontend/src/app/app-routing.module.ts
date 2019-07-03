@@ -11,17 +11,19 @@ import { AdminComponent } from './components/admin/admin.component';
 import { PrincipalPlatilloComponent } from './components/platillo/principal-platillo/principal-platillo.component';
 import { EditarPlatilloComponent } from './components/admin/editar-platillo/editar-platillo.component';
 import { UsersComponent } from './components/admin/users/users.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: '', component: PrincipalPlatilloComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent },//solo adm
-  { path: 'admin/editar-platillo', component: EditarPlatilloComponent },
-  { path: 'admin/users', component: UsersComponent},
+  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent, canActivate: [AdminGuard] },//solo adm
+  { path: 'admin/editar-platillo', component: EditarPlatilloComponent, canActivate: [AdminGuard] },
+  { path: 'admin/users', component: UsersComponent, canActivate: [AdminGuard]},
   { path: 'platillo/:id', component: DetallePlatilloComponent},
   { path: 'user/login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent},
-  { path: 'user/profile', component: ProfileComponent}, // solo auth
+  { path: 'user/profile', component: ProfileComponent, canActivate: [AuthGuard]}, // solo auth
   { path: '**', component: Page404Component},
 
 

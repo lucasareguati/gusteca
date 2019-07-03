@@ -11,6 +11,7 @@ export class CarritoService {
 
   readonly URL_API = 'http://localhost:3000/carrito/';
 
+  totalCarrito: number;
   carritos: Carrito[];
   selectedCarrito: Carrito;
 

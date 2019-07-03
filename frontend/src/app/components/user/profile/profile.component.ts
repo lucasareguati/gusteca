@@ -6,7 +6,6 @@ import { CarritoService } from '../../../services/carrito.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { Carrito } from 'src/app/models/carrito';
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -18,8 +17,8 @@ export class ProfileComponent implements OnInit {
   usuario: Usuario;
   totalCarrito: number;
 
-  // tslint:disable-next-line:max-line-length
-  constructor(private carroService: CarroService, private carritoService: CarritoService, private usuarioService: UsuarioService) {
+  constructor(private carroService: CarroService, private carritoService: CarritoService,
+   private usuarioService: UsuarioService) {
   }
 
   ngOnInit() {

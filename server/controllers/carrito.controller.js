@@ -1,6 +1,7 @@
 const Carrito = require('../models/carrito');
 const { sequelize, Sequelize } = require('../database');
 
+
 const carritoCtrl = {};
 
 
@@ -11,10 +12,10 @@ carritoCtrl.getCarritos = async(req, res) => {
 }
 
 carritoCtrl.createCarrito = async(req, res) => {
-    await Carrito.create(req.body);
-    res.send({
-        status: "Creado correctamente"
+    await Carrito.create(req.body).then(result => {
+        res.send({id_carrito: result.dataValues.id_carrito});
     });
+    
 }
 
 

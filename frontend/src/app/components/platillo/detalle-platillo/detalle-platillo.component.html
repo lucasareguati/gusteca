@@ -57,8 +57,8 @@
             </ul>
             <div>
               <h6>Cantidad </h6>
-              <input mdbInput type="number" value="1"  style="width:40px;height:30px" >
-              <button mdbBtn type="button" (click)="agregarAlCarrito()" color="success" mdbWavesEffect><mdb-icon fas icon="shopping-cart"></mdb-icon> Agregar al carrito</button>
+              <input mdbInput type="number" value="1"  style="width:40px;height:30px" #cant="ngModel" [(ngModel)]="cantidadPlatillo" >
+              <button mdbBtn type="button" (click)="agregarAlCarrito(platilloService.platillo)" color="success" mdbWavesEffect><mdb-icon fas icon="shopping-cart"></mdb-icon> Agregar al carrito</button>
             
           </div>
           </section>
