@@ -5,7 +5,7 @@
       <div class="description-content-main-group attribute-content">
           
           <div class="card-section">
-              
+               
           <div class="container z-depth-2 col-7 left" >
           <img src="{{platilloService.platillo?.imagen}}" width="100%"> 
           </div>
@@ -64,7 +64,8 @@
           </section>
           
 <hr> 
-<section>
+<section *ngIf="auth.isLogged">
+
 <h3>¿Querés preguntar algo?</h3>
 
 
@@ -75,9 +76,6 @@
 </div>
 
 </section>
-
- 
-
 
 <section>
     
@@ -93,6 +91,14 @@
         {{consulta.consulta}}
       </mdb-card-text>
       <p>{{consulta.respuesta}}</p>
+      <div *ngIf="consulta.respuesta == '' && auth.isAdmn" >
+        <!--Material textarea-->
+<div class="md-form md-outline">
+  <textarea type="text" name="respuesta" #respue="ngModel" [(ngModel)]="this.respuesta" class="form-control md-textarea" rows="3" mdbInput></textarea>
+  <label for="form75">Respuesta</label>
+  <button type="click" (click)="responder(consulta)" class="btn btn-primary btn-md mt-0 ml-auto">Responder</button>
+</div>
+      </div>
 
       
 

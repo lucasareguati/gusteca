@@ -11,7 +11,26 @@ import { UsuarioService} from './usuario.service';
 
 export class AuthService {
 
-  constructor(private afsAuth: AngularFireAuth, private userS: UsuarioService) { }
+  public isAdmn = false;
+  public isLogged: Boolean;
+
+  constructor(private afsAuth: AngularFireAuth, private userS: UsuarioService, private authService: AuthService) {
+  }
+
+  getCurrentUser() {
+    this.isAuth().subscribe( auth => {
+      if ( auth) {
+        console.log('user logged', auth.email);
+        this.isLogged = true;
+        if (auth.email === 'lucasareguati@gmail.com' || auth.email === 'mateorogatky@gmail.com'){
+          this.isAdmn = true;
+        }
+      } else {
+        console.log('not user logged');
+        this.isLogged = false;
+      }
+    });
+  }
 
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject ) => {
@@ -22,17 +41,9 @@ export class AuthService {
     });
 
   }
-
-  loginFacebookUser() {
-//    return this.afsAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
-  }
-
-  loginGoogleUser() {
-  //  return this.afsAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
-  }
-
   logoutUser() {
      return this.afsAuth.auth.signOut();
+     this.isAdmn = false;
   }
 
   isAuth() {

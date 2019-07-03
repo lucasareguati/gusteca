@@ -10,13 +10,15 @@ import { CargarPlatilloComponent } from './components/admin/cargar-platillo/carg
 import { AdminComponent } from './components/admin/admin.component';
 import { PrincipalPlatilloComponent } from './components/platillo/principal-platillo/principal-platillo.component';
 import { EditarPlatilloComponent } from './components/admin/editar-platillo/editar-platillo.component';
+import { UsersComponent } from './components/admin/users/users.component';
 
 const routes: Routes = [
   { path: '', component: PrincipalPlatilloComponent },
   { path: 'admin', component: AdminComponent },
-  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent },
+  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent },//solo adm
   { path: 'admin/editar-platillo', component: EditarPlatilloComponent },
-  { path: 'platillo/:id', component: DetallePlatilloComponent}, // platillo/:id
+  { path: 'admin/users', component: UsersComponent},
+  { path: 'platillo/:id', component: DetallePlatilloComponent},
   { path: 'user/login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent},
   { path: 'user/profile', component: ProfileComponent}, // solo auth

@@ -24,6 +24,8 @@ import { EditarPlatilloComponent } from './components/admin/editar-platillo/edit
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FooterComponent } from './components/footer/footer.component';
 import { CarroComponent } from './models/carro/carro.component';
+import { UsersComponent } from './components/admin/users/users.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -44,6 +46,7 @@ import { CarroComponent } from './models/carro/carro.component';
     EditarPlatilloComponent,
     FooterComponent,
     CarroComponent,
+    UsersComponent,
   ],
   imports: [
     FormsModule,
@@ -55,8 +58,10 @@ import { CarroComponent } from './models/carro/carro.component';
     AngularFireStorageModule,
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
+    NgxPaginationModule
   ],
-  providers: [AngularFireAuth],
+  providers: [AngularFireAuth,
+  NavbarComponent],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })

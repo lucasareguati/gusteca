@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class PrincipalPlatilloComponent implements OnInit {
 
   constructor(private platilloService: PlatilloService, private router: Router) { }
+  pageActual: Number = 1;
 
   ngOnInit() {
     this.getPlatillos();

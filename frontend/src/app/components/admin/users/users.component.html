@@ -1,0 +1,29 @@
+
+<h1>Listado de usuarios</h1>
+
+
+
+<table id="contentToConvert" class="table table-striped">
+    
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Usuario</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Correo</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Codigo Postal</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of usuarioService.usuarios">
+      <td scope="row">{{usuario.id_usuario}}</td>
+      <td scope="row">{{usuario.nombre_usuario}}</td>
+      <td>{{usuario.nombre}}</td>
+      <td>{{usuario.email}}</td>
+      <td>{{usuario.tel}}</td>
+      <td>{{usuario.codigopostal}}</td>
+      
+    </tr>
+  </tbody>
+</table>

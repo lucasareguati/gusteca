@@ -1,7 +1,7 @@
 
 <div class="card-deck">
     <!-- Card -->
-    <ng-container *ngFor="let platillo of platilloService.platillos">
+    <ng-container *ngFor="let platillo of platilloService.platillos | paginate: { itemsPerPage: 12, currentPage: pageActual} ">
       <ng-container *ngIf="!platillo.baja">
         <div class="alinear"> 
         <mdb-card >
@@ -10,7 +10,7 @@
         <mdb-card-img src="{{platillo.imagen}}" alt="Card image cap"></mdb-card-img>
         <a>
           <div class="mask"></div>
-        </a>
+        </a> 
       </div>
       <!--Card content-->
       <mdb-card-body>
@@ -31,7 +31,8 @@
       </mdb-card-body>
   
     </mdb-card>
+
   </div>
     </ng-container>
-  </ng-container>
-  </div>
+    </ng-container>
+  <pagination-controls  class="position-relative" (pageChange)="pageActual = $event"></pagination-controls>

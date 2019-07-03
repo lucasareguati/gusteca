@@ -5,7 +5,9 @@ import { UsuarioService } from '../../../services/usuario.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConsultaService } from '../../../services/consulta.service';
 import { Consulta } from 'src/app/models/consulta';
-
+import { NavbarComponent } from '../../navbar/navbar.component';
+import { AuthService } from 'src/app/services/auth.service';
+ 
 @Component({
   selector: 'app-detalle-platillo',
   templateUrl: './detalle-platillo.component.html',
@@ -15,9 +17,14 @@ export class DetallePlatilloComponent implements OnInit {
 
   platillo: Platillo;
   idPlato: string;
+  isAdmn: Boolean;
+  respuesta: string;
 
   constructor(private usuarioService: UsuarioService, private consultaService: ConsultaService,
-              private platilloService: PlatilloService, private activatedRoute: ActivatedRoute) {
+              private platilloService: PlatilloService, private activatedRoute: ActivatedRoute,
+              private auth: AuthService, private navbar: NavbarComponent) {
+
+
   }
   ngOnInit() {
     this.idPlato = this.activatedRoute.snapshot.paramMap.get('id');
@@ -26,10 +33,6 @@ export class DetallePlatilloComponent implements OnInit {
     });
     this.obtenerPreguntas();
 
-  }
-
-  agregarAlCarrito(){
-    
   }
 
   preguntar(pregunta) {
@@ -46,14 +49,20 @@ export class DetallePlatilloComponent implements OnInit {
     this.consultaService.selectedConsulta.consulta = '';
   }
 
- 
-
   obtenerPreguntas() {
     this.consultaService.getConsultas(Number(this.idPlato)).subscribe( res => {
       console.log(this.consultaService.consultas = res[0] as Consulta[]);
     });
   }
 
+  responder(consulta) {
+    consulta.respuesta = this.respuesta;
+    console.log(consulta);
+    this.consultaService.putConsulta(consulta).subscribe(res => {
+      console.log('Respuesta guardada satisfactoriamente.');
+      this.respuesta = '';
+    });
+  }
 
   fechaActual() {
     const hoy = new Date();

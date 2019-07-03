@@ -15,11 +15,17 @@ export class UsuarioService {
   usuarioLogueado: Usuario;
   // usuarios: Usuario[];
   selectedUsuario: Usuario;
+  usuarios: Usuario[];
 
 
   constructor(private http: HttpClient) {
     this.selectedUsuario = new Usuario();
   }
+
+  getUsuarios() {
+    return this.http.get(this.URL_API);
+  }
+
 
   getUsuario(correo: string) {
     return this.http.get(this.URL_API + `${correo}`);

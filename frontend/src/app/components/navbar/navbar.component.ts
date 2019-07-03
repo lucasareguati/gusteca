@@ -16,10 +16,9 @@ export class NavbarComponent implements OnInit {
   public isLogged = false;
   public isAdmin = false;
 
-
+ 
   ngOnInit() {
    this.getCurrentUser();
-
   }
 
   // Funcion para validar si se Logueo correctamente y si es admin
@@ -30,6 +29,7 @@ export class NavbarComponent implements OnInit {
         this.isLogged = true;
         if (auth.email === 'lucasareguati@gmail.com' || auth.email === 'mateorogatky@gmail.com'){
           this.isAdmin = true;
+          this.authService.isAdmn = true;
         }
       } else {
         console.log('not user logged');

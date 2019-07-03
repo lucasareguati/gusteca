@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="mainNavbar">
     <ul class="navbar-nav mr-auto">
       Logueado : {{isLogged}}
-    </ul>
+    </ul> 
      
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!isLogged">
@@ -29,6 +29,7 @@
           <div class="dropdown-menu dropdown-primary">
             <button class="dropdown-item"routerLink="/admin/editar-platillo">Editar platillo</button>
             <button class="dropdown-item" routerLink="/admin/cargar-platillo">Cargar platillo</button>
+            <button class="dropdown-item" routerLink="/admin/users">Usuarios</button>
           </div>
        <!-- </div> -->
       </li>
