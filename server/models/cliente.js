@@ -10,7 +10,10 @@ const cliente = sequelize.define('cliente',{
     nombre: Sequelize.TEXT,
     contrasenia: Sequelize.TEXT, 
     codigopostal: Sequelize.TEXT,
-    dni: Sequelize.INTEGER,
+    activo:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
+    },
     email: Sequelize.TEXT,
     tel: Sequelize.INTEGER    
 },{

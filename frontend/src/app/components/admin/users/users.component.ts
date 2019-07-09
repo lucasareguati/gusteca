@@ -22,5 +22,21 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  seleccionarUsuario(usuario) {
+    this.usuarioService.selectedUsuario = usuario;
+  }
 
+  deshabilitarOHabilitar() {
+    if (this.usuarioService.selectedUsuario.activo) {
+      this.usuarioService.selectedUsuario.activo = false;
+      this.usuarioService.putUsuario(this.usuarioService.selectedUsuario).subscribe(res => {
+        console.log(this.usuarioService.selectedUsuario.nombre + 'Se ha deshabilitado eseta cuenta');
+      });
+    } else {
+      this.usuarioService.selectedUsuario.activo = true;
+      this.usuarioService.putUsuario(this.usuarioService.selectedUsuario).subscribe( res => {
+        console.log( this.usuarioService.selectedUsuario.nombre + ' Se ha habilitado esta cuenta');
+      });
+    }
+  }
 }

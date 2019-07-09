@@ -1,5 +1,5 @@
 // Aca va todo lo relacionado con el login de users
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireAuth} from '@angular/fire/auth';
 import { Injectable } from '@angular/core';
 import { auth } from 'firebase/app';
 import { map } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class AuthService {
   }
 
   getCurrentUser() {
+
     this.isAuth().subscribe( auth => {
       if ( auth) {
         console.log('user logged', auth.email);
