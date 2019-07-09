@@ -1,0 +1,125 @@
+*{
+     /*background: #08979D;;
+     color: #08979D; */
+    color: black;
+    font-family: 'Montserrat','Source Sans Pro','Raleway','Roboto',sans-serif;
+    /* border-radius: 100px; */
+    /* background: black;  */
+}
+
+/* .description-content-main-group .card-section .specs-wrapper{
+    background: green;
+} */
+
+.description-content-main-group{
+    width: 100%;
+	max-width: 1200px;
+	margin: auto;
+    padding: 0 20px;
+    /* width: 90%;
+    overflow: hidden;
+    background: red; */
+}
+
+.description-content-main-group .card-section .imgPlatillo {
+    margin-top: 50px;
+    top: 160px;
+    left: 100px;
+    width: 400px;
+    height: 400px; 
+    /* border-radius: 100px; */ 
+}
+
+.description-content-main-group .card-section .specs-wrapper{
+    /* font-family: 'Montserrat','Source Sans Pro','Raleway','Roboto',sans-serif; */
+    text-align: left;
+    /* text-transform: capitalize; */
+    text-transform: none;
+    font-size: 30px;
+    /* background: #08979D; */
+    background:10px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .caracteristicasGenerales {
+    position: relative;
+    top: 0px;
+    left: 80px;
+    background: pink;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-linea{
+    position: relative;
+    top: 10px;
+    left: 0px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-modelo {
+    position: relative;
+    top: -80px;
+    right: -300px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-aleacion {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-diametro {
+    position: relative;
+    top: -90px;
+    right: -300px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-stock {
+    position: relative;
+    top: -20px;
+    left: 0px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-categoria {
+    position: relative;
+    top: -110px;
+    left: 300px;
+    width: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-desc{
+    position: absolute;
+    top: 100px;
+    left: 700px;
+    width:40%;    
+}
+
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-precio{
+    position: absolute;
+    top: 400px;
+    left: 700px;
+    font-family: 'Source Sans Pro';
+    width: 300px;
+    height: 300px;
+    font-size: 50px;
+       
+}
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-precio .textoPrecio{
+    position:absolute;
+    top: 110px;
+    left: 0px;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .specs-item-precio .textoPago{
+    text-transform: none;
+}
+
+.description-content-main-group .card-section .specs-wrapper .specs-container .cantidadCarrito{
+    position: absolute;
+    top: 800px;
+    left: 710px;
+}
