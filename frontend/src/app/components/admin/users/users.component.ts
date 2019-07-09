@@ -14,7 +14,7 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.getUsuarios();
   }
- 
+
   getUsuarios() {
     this.usuarioService.getUsuarios().subscribe(res => {
       this.usuarioService.usuarios = res as Usuario[];
@@ -27,14 +27,14 @@ export class UsersComponent implements OnInit {
   }
 
   deshabilitarOHabilitar() {
-    if ( this.usuarioService.selectedUsuario.activo = true ) {
+    if (this.usuarioService.selectedUsuario.activo) {
       this.usuarioService.selectedUsuario.activo = false;
-      this.usuarioService.postUsuario(this.usuarioService.selectedUsuario).subscribe(res => {
+      this.usuarioService.putUsuario(this.usuarioService.selectedUsuario).subscribe(res => {
         console.log(this.usuarioService.selectedUsuario.nombre + 'Se ha deshabilitado eseta cuenta');
       });
     } else {
       this.usuarioService.selectedUsuario.activo = true;
-      this.usuarioService.postUsuario(this.usuarioService.selectedUsuario).subscribe( res => {
+      this.usuarioService.putUsuario(this.usuarioService.selectedUsuario).subscribe( res => {
         console.log( this.usuarioService.selectedUsuario.nombre + ' Se ha habilitado esta cuenta');
       });
     }
