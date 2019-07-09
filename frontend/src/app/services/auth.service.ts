@@ -35,15 +35,22 @@ export class AuthService {
   loginEmailUser(email: string, pass: string) {
     return new Promise((resolve, reject ) => {
       this.afsAuth.auth.signInWithEmailAndPassword(email, pass)
-      .then(userData => resolve(userData))
+      .then(userData => {
+        this.isLogged = true;
+        if (userData.user.email === 'lucasareguati@gmail.com') {
+          this.isAdmn = true;
+        }
+        resolve(userData);
+        })
       .catch(err => reject(err));
 
     });
 
   }
   logoutUser() {
+    this.isAdmn = false;
+    this.isLogged = false;
      return this.afsAuth.auth.signOut();
-     this.isAdmn = false;
   }
 
   isAuth() {

@@ -12,11 +12,16 @@ export class ConsultaService {
   consultas: Consulta[];
   consulta: Consulta;
   selectedConsulta: Consulta;
+  sinRespuestaNumero: number;
 
   constructor(private http: HttpClient) {
     this.selectedConsulta = new Consulta();
    }
- 
+
+   getConsultasSinRespuesta() {
+     return this.http.get(this.URL_API);
+   }
+
    getConsultas(id_platillo: number) {
      return this.http.get(this.URL_API + `${id_platillo}`);
    }

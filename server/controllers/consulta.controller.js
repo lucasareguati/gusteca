@@ -14,6 +14,18 @@ consultaCtrl.getConsultas = async (req, res) => {
     res.json(consulta);
 }   
 
+consultaCtrl.getConsultasSinRespuesta = async (req, res ) => {
+    //const consulta = await Consulta.findAll({
+      //  where: {
+        //respuesta: ''
+       // }
+    //});
+    const consulta = await sequelize.query(`SELECT * FROM consulta INNER JOIN usuarioConsulta ON consulta.id_platillo = usuarioConsulta.id_platillo WHERE consulta.id_consulta = usuarioConsulta.id_consulta and consulta.respuesta = '' `)
+    
+    // const consulta = await sequelize.query(`SELECT * FROM consulta WHERE respuesta = ''`);
+    res.json(consulta);
+}
+
 consultaCtrl.createConsulta = async (req, res) => {
     const consultaCreada = req.body;
     await Consulta.create(consultaCreada);

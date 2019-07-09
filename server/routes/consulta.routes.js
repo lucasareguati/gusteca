@@ -4,6 +4,7 @@ const consulta = require('../controllers/consulta.controller');
 
 router.get('/:idPlatillo', consulta.getConsultas);
 router.post('/', consulta.createConsulta);
+router.get('/', consulta.getConsultasSinRespuesta);
 router.put('/:idConsulta', consulta.editConsulta);
 
 

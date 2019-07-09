@@ -4,14 +4,17 @@
       <div class="card ">
         <div class="card-content ">
 
-        <form class="text-center border border-light p-5" #usuarioForm="ngForm" (ngSubmit)="registrarUsuario(usuarioForm)" action=""> 
+        <form class="text-center border border-light p-5" [formGroup]="usuarioForm" #usuarioForm="ngForm" (ngSubmit)="registrarUsuario(usuarioForm)" action=""> 
           <div class="row">
             <div class="md-form">
-            
+          
             <div class="input-field">
                 <input mdbInput type="text" id="nUser" class="form-control mb-4" name="nombre_usuario" #nombre_usuario="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre_usuario" 
                         minlength="8" maxlength="20" required>
                 <label for="nUser">Nombre de Usuario</label>
+                <div *ngIf="controlNombreUsuario()">
+                  Nombre Disponible
+                </div>
                 <div>
                   <div *ngIf="nombre_usuario.touched && !nombre_usuario.valid">
                     <div *ngIf="nombre_usuario.errors.required">Ingrese un nombre de usuario.</div>

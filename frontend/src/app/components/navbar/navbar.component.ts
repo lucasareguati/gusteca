@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AngularFireAuth} from '@angular/fire/auth';
 import {UsuarioService } from '../../services/usuario.service';
+import { ConsultaService } from 'src/app/services/consulta.service';
+import { ConsultasComponent } from '../admin/consultas/consultas.component';
 
 
 @Component({
@@ -11,14 +13,17 @@ import {UsuarioService } from '../../services/usuario.service';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(private usuarioService: UsuarioService, private authService: AuthService, private afsAuth: AngularFireAuth) { }
+  constructor(private usuarioService: UsuarioService, private consultaService: ConsultaService,
+              private authService: AuthService, private afsAuth: AngularFireAuth, private consulta: ConsultasComponent) {
+              this.consulta.obtenerSinRespuesta();
+              }
   public app_name = 'Gusteka Drums';
   public isLogged = false;
   public isAdmin = false;
 
- 
+
   ngOnInit() {
-   this.getCurrentUser();
+   this.authService.getCurrentUser();
   }
 
   // Funcion para validar si se Logueo correctamente y si es admin
@@ -26,14 +31,10 @@ export class NavbarComponent implements OnInit {
     this.authService.isAuth().subscribe( auth => {
       if ( auth) {
         console.log('user logged', auth.email);
-        this.isLogged = true;
-        if (auth.email === 'lucasareguati@gmail.com' || auth.email === 'mateorogatky@gmail.com'){
-          this.isAdmin = true;
-          this.authService.isAdmn = true;
+        if (auth.email === 'lucasareguati@gmail.com' || auth.email === 'mateorogatky@gmail.com') {
         }
       } else {
         console.log('not user logged');
-        this.isLogged = false;
       }
     });
   }
@@ -41,7 +42,6 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this.afsAuth.auth.signOut();
-    this.isAdmin = false;
   }
 
 }

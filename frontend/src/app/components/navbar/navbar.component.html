@@ -11,25 +11,26 @@
     </ul> 
      
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item" *ngIf="!isLogged">
+      <li class="nav-item" *ngIf="!authService.isLogged">
         <a class="nav-link" routerLink="/user/register">Registrarse
         </a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
+      <li class="nav-item" *ngIf="authService.isLogged">
         <a class="nav-link" routerLink="/user/profile">Perfil</a>
       </li>
       <li class="dropdown" mdbDropdown>
       <!--  <div class="dropdown" mdbDropdown>-->
-        <a class="nav-link" mdbDropdownToggle *ngIf="isAdmin">Menú administración</a>
+        <a class="nav-link" mdbDropdownToggle *ngIf="authService.isAdmn">Menú administración</a>
           <!--<button mdbDropdownToggle mdbBtn color="primary" class="dropdown-toggle waves-light" type="button"
             mdbWavesEffect>
             Dropdown primary
           </button> -->
         
           <div class="dropdown-menu dropdown-primary">
-            <button class="dropdown-item"routerLink="/admin/editar-platillo">Editar platillo</button>
+            <button class="dropdown-item" routerLink="/admin/editar-platillo">Editar platillo</button>
             <button class="dropdown-item" routerLink="/admin/cargar-platillo">Cargar platillo</button>
             <button class="dropdown-item" routerLink="/admin/users">Usuarios</button>
+            <button class="dropdown-item" routerLink="/admin/consultas">Consultas  <mdb-badge style="margin-left: 5px" color="amber darken-2"> {{consultaService.sinRespuestaNumero}}</mdb-badge></button>
           </div>
        <!-- </div> -->
       </li>
@@ -38,11 +39,11 @@
         <a class="nav-link" routerLink="/admin/cargar-platillo">Cargar Platillo</a>
       </li>
       -->
-      <li class="nav-item" *ngIf="!isLogged">
+      <li class="nav-item" *ngIf="!authService.isLogged">
         <a class="nav-link" routerLink="/user/login">Iniciar Sesión
         </a>
       </li>
-      <li class="nav-item" *ngIf="isLogged">
+      <li class="nav-item" *ngIf="authService.isLogged">
         <a href="#" class="nav-link" (click)="onLogout()">Logout
         </a>
       </li>

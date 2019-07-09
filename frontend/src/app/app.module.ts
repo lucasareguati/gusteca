@@ -25,6 +25,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FooterComponent } from './components/footer/footer.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ConsultasComponent } from './components/admin/consultas/consultas.component';
 
 
 
@@ -45,6 +46,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
     EditarPlatilloComponent,
     FooterComponent,
     UsersComponent,
+    ConsultasComponent,
   ],
   imports: [
     FormsModule,
@@ -59,7 +61,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     NgxPaginationModule
   ],
   providers: [AngularFireAuth,
-  NavbarComponent],
+  NavbarComponent,
+  ConsultasComponent],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
 })

@@ -13,6 +13,7 @@ import { EditarPlatilloComponent } from './components/admin/editar-platillo/edit
 import { UsersComponent } from './components/admin/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { ConsultasComponent } from './components/admin/consultas/consultas.component';
 
 const routes: Routes = [
   { path: '', component: PrincipalPlatilloComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'admin/cargar-platillo', component: CargarPlatilloComponent, canActivate: [AdminGuard] },//solo adm
   { path: 'admin/editar-platillo', component: EditarPlatilloComponent, canActivate: [AdminGuard] },
   { path: 'admin/users', component: UsersComponent, canActivate: [AdminGuard]},
+  { path: 'admin/consultas', component: ConsultasComponent },
   { path: 'platillo/:id', component: DetallePlatilloComponent},
   { path: 'user/login', component: LoginComponent },
   { path: 'user/register', component: RegisterComponent},

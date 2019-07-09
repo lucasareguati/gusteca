@@ -1,0 +1,22 @@
+<h1>Nuevas consultas ;)</h1>
+
+<table mdbTable striped="true">
+  <thead>
+    <tr>
+      <th scope="col">Nombre Usuario</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Consulta</th>
+      <th scope="col">Ver</th>
+      
+    </tr>
+  </thead>
+  <tbody>
+    <tr mdbTableCol *ngFor="let cons of sinRespuesta">
+      <th scope="row">{{cons.nombre_usuario}}</th>
+      <td>{{cons.fecha}}</td>
+      <td>{{cons.consulta}}</td>
+      <td> <a routerLink="/platillo/{{cons.id_platillo}}"><mdb-icon fas icon="arrow-right"></mdb-icon></a></td>
+      
+    </tr>
+  </tbody>
+</table>

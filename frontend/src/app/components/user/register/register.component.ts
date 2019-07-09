@@ -7,6 +7,7 @@ import {AngularFireAuth  } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import { auth } from 'firebase';
+
 import 'firebase/auth';
 
 
@@ -21,13 +22,17 @@ import 'firebase/auth';
 
 export class RegisterComponent implements OnInit {
 
+  usuarios: Usuario[];
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private authService: AuthService, private http: HttpClient, private usuarioService: UsuarioService, private afsauth: AngularFireAuth) { }
     public error = false;
     public mensajeErr;
 
    ngOnInit() {
+    this.getUsers();
+
   }
+
 
   registrarUsuario(form: NgForm) {
 
@@ -53,5 +58,22 @@ export class RegisterComponent implements OnInit {
       console.log('Error: ' + err);
     });
   }
+
+  getUsers() {
+    this.usuarioService.getUsuarios().subscribe( res => {
+      this.usuarios = res as Usuario[];
+    });
+  }
+
+  controlNombreUsuario() {
+    let disp = true;
+    this.usuarios.forEach( user => {
+      if (user.nombre_usuario.toLocaleLowerCase() === this.usuarioService.selectedUsuario.nombre_usuario.toLocaleLowerCase()) {
+        disp = false;
+      }
+    });
+    return disp;
+  }
+
 }
 
