@@ -65,15 +65,5 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  controlNombreUsuario() {
-    let disp = true;
-    this.usuarios.forEach( user => {
-      if (user.nombre_usuario.toLocaleLowerCase() === this.usuarioService.selectedUsuario.nombre_usuario.toLocaleLowerCase()) {
-        disp = false;
-      }
-    });
-    return disp;
-  }
-
 }
 
