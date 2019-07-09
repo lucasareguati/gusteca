@@ -13,6 +13,8 @@
       <th scope="col">Correo</th>
       <th scope="col">Telefono</th>
       <th scope="col">Codigo Postal</th>
+      <th scope="col">Activo</th>
+      <th scope="col">Deshabilitar</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +25,69 @@
       <td>{{usuario.email}}</td>
       <td>{{usuario.tel}}</td>
       <td>{{usuario.codigopostal}}</td>
-      
+      <td>{{usuario.activo}}</td>
+      <td>
+        
+
+        <button  *ngIf="usuario.activo; else activar"  (click)="seleccionarUsuario(usuario)" (click)="desactivar.show()"  >
+            <i class="material-icons">block</i>
+        </button>
+          
+
+        <ng-template #activar>
+        <button (click)="seleccionarUsuario(usuario)" (click)="habilitar.show()"> 
+            <i class="material-icons">done</i> 
+        </button>
+        </ng-template>
+           </td>
     </tr>
   </tbody>
 </table>
+
+<a type="button" mdbBtn color="primary" class="relative waves-light" (click)="basicModal.show()" mdbWavesEffect>Launch demo modal</a>
+
+<div mdbModal #desactivar="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="desactivar.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Deshabilitar usuario <b>{{usuarioService.selectedUsuario.nombre_usuario}}</b></h4>
+      </div>
+      <div class="modal-body">
+        <h4>¿Está seguro que desea deshabilitar a {{usuarioService.selectedUsuario.nombre}}</h4>      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="desactivar.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="deshabilitarOHabilitar()" mdbWavesEffect>Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Activar usuario-->
+
+
+<!--Deshabilitar Usuario-->
+<!--
+<div mdbModal #habilitar="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Activar usuario <b>{{usuarioService.selectedUsuario.nombre_usuario}}</b></h4>
+      </div>
+      <div class="modal-body">
+        <h4>¿Está seguro que desea habilitar a {{usuarioService.selectedUsuario.nombre}}</h4>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Close</button>
+        <button type="button" mdbBtn color="primary" (click)="deshabilitarOHabilitar()" class="relative waves-light" mdbWavesEffect>Save!</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->

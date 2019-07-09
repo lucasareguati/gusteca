@@ -38,6 +38,7 @@ clienteCtrl.editUsuario = async(req, res) => {
         nombre: req.body.nombre,
         codigopostal: req.body.codigopostal,
         email: req.body.email,
+        activo: req.body.activo,
         tel: req.body.tel
     }
 

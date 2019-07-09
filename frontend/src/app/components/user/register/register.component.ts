@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
       this.usuarios = res as Usuario[];
     });
   }
-
+/*
   controlNombreUsuario() {
     let disp = true;
     this.usuarios.forEach( user => {
@@ -73,7 +73,7 @@ export class RegisterComponent implements OnInit {
       }
     });
     return disp;
-  }
+  } */
 
 }
 

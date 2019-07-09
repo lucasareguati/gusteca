@@ -36,10 +36,17 @@ export class LoginComponent implements OnInit {
         const user = auth().currentUser;
         if (user.emailVerified.valueOf()) {
         this.usuarioService.getUsuario('/' + this.email).subscribe( res => { // consulta a la BBDD
+          
           console.log(res[0]); // En la posicion 0 de la respuesta se encuentra el objeto
           this.usuarioService.usuarioLogueado = res[0] as Usuario;
+          if (!this.usuarioService.usuarioLogueado.activo) {
+            this.onLogoutUser();
+            console.log('Usuario inhabilitado');
+
+          } else {
           this.router.navigate(['/']); // navega a la ruta /
           console.log(this.usuarioService.usuarioLogueado);
+          }
         });
       } else {
         this.verificado = false;
@@ -74,19 +81,23 @@ export class LoginComponent implements OnInit {
 
   verificar() { // Si ya inicio sesion lo trae de la BBDD sino lo registra
     const user = auth().currentUser;
-    
+
       console.log(user.displayName, user.email);
       this.usuarioService.getUsuario('/' + user.email).subscribe( res => {
         this.usuarioService.usuarioLogueado = res[0] as Usuario;
-
+        if (!this.usuarioService.usuarioLogueado.activo ) {
+          this.onLogoutUser();
+          console.log('usuario deshabilitado');
+        }
         if (res[0] === undefined) { // no esta registrado en BBDD
           const usuario = new Usuario;
           usuario.email = user.email;
           usuario.nombre = user.displayName;
+          usuario.tel = Number(user.phoneNumber);
           usuario.nombre_usuario = user.displayName;
           this.usuarioService.usuarioLogueado = usuario;
           console.log(usuario);
-          this.usuarioService.postUsuario(usuario).subscribe( res => {
+          this.usuarioService.postUsuario(usuario).subscribe( resp => {
             console.log('CORRECTAMENTE');
           });
         }
