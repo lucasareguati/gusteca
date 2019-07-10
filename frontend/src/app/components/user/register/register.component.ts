@@ -26,13 +26,15 @@ export class RegisterComponent implements OnInit {
   pass2: string;
   usuarioExiste: Boolean;
   usuarios: [];
+  usuarioNuevo: string = this.usuarioService.selectedUsuario.nombre_usuario;
 
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private authService: AuthService, private http: HttpClient, private usuarioService: UsuarioService, private afsauth: AngularFireAuth) {
     this.getUsers();
    }
-    public error = false;
-    public mensajeErr;
+
+  public error = false;
+  public mensajeErr;
 
    ngOnInit() {
 
@@ -40,12 +42,12 @@ export class RegisterComponent implements OnInit {
 
   confirmarNombreUsuario() {
     let exist = true;
-    this.usuarios.forEach(user => {
-    const nombre: string = user['nombre_usuario'];
-    if ( nombre.toLocaleLowerCase() === this.usuarioService.selectedUsuario.nombre_usuario.toLocaleLowerCase()) {
-      exist = false;
+    for (const user of this.usuarios) {
+      const nombre: string = user['nombre_usuario'];
+      if ( nombre.toLocaleLowerCase() === this.usuarioNuevo.toLocaleLowerCase()) {
+        exist = false;
+      }
     }
-    });
     return exist;
   }
 
@@ -59,7 +61,7 @@ export class RegisterComponent implements OnInit {
 
   registrarUsuario(form: NgForm) {
 
-    this.afsauth.auth.createUserWithEmailAndPassword(form.value.email, form.value.contrasenia).then( () => {
+    this.afsauth.auth.createUserWithEmailAndPassword(form.value.email, form.value.pass2).then( () => {
       this.usuarioService.postUsuario(form.value) // guarda en la base de datos
         .subscribe( async res => {
           form.resetForm();
