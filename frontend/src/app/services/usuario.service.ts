@@ -26,6 +26,9 @@ export class UsuarioService {
     return this.http.get(this.URL_API);
   }
 
+  getNombreUsuarios() {
+    return this.http.get(this.URL_API + '/nombre_usuarios');
+  }
 
   getUsuario(correo: string) {
     return this.http.get(this.URL_API + `${correo}`);

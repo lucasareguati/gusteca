@@ -9,6 +9,11 @@ clienteCtrl.getUsuarios = async (req, res) => {
     res.json(clientes);
 }
  
+clienteCtrl.getNombreUsuarios = async (req, res) => {
+    const nombres = await sequelize.query(`SELECT nombre_usuario from cliente`);
+    res.json(nombres);
+}
+
 clienteCtrl.getUsuario = async (req, res) => {
     
     // Obtiene los datos del user a partir del email.

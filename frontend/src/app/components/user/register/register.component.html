@@ -12,7 +12,9 @@
                 <input mdbInput type="text" id="nUser" class="form-control mb-4" name="nombre_usuario" #nombre_usuario="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre_usuario" 
                         minlength="8" maxlength="20" required>
                 <label for="nUser">Nombre de Usuario</label>
-                
+                <div *ngIf="!confirmarNombreUsuario()">
+                  <mdb-icon fas icon="exclamation-triangle"></mdb-icon>
+                </div>
                 <div>
                   <div *ngIf="nombre_usuario.touched && !nombre_usuario.valid">
                     <div *ngIf="nombre_usuario.errors.required">Ingrese un nombre de usuario.</div>
@@ -21,16 +23,22 @@
                 </div>
             
                 <div class="md-form">
-            <input mdbInput id="pass" type="password" class="form-control mb-4" name="contrasenia" #contrasenia="ngModel" [(ngModel)]="usuarioService.selectedUsuario.contrasenia" 
+            <input mdbInput id="pass" type="password" class="form-control mb-4" name="pass1" #contrasenia="ngModel" [(ngModel)]="pass1" 
              required>
             <label for="pass">Contraseña</label> 
                   </div>
 
                   <div class="md-form">      
-            <input mdbInput type="password" id="pass2" class="form-control mb-4" name="contraseniaVerificada">
+            <input mdbInput type="password" id="pass2" class="form-control mb-4" name="pass2" #contrasenia2="ngModel" [(ngModel)]="pass2">
             <label for="pass2">Repita la contraseña</label>
                   </div>
-             
+                  <div *ngIf="!confirmarPass() && contrasenia.touched && contrasenia2.touched ; else distintas">
+                    <p> Las contraseñas no coinciden <mdb-icon fas icon="exclamation-triangle"></mdb-icon> </p>                 
+                  </div>
+                  <ng-template #distintas>
+                    
+                  </ng-template>
+
                   <div class="md-form">
             <input mdbInput type="text" id="nombre" class="form-control mb-4" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre" 
              minlength="8" maxlength="20" required>
