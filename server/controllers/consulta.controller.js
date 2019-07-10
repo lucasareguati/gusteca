@@ -55,7 +55,7 @@ consultaCtrl.editConsulta = async (req, res) => {
             var mailOptions = {
                 from: 'GustecaDrumps <gustecadrumps@gmail.com>',
                 to: Receptor[0][0].email,
-                subject: 'Counsulta a GustecaDrumps.',
+                subject: 'Consulta a GustecaDrumps.',
                 text: 'Hola ',
                 html: `<h1>Hola ${Receptor[0][0].nombre}</h1>
                 <h3>Hemos respondido tu consulta: <b>${consultaActualizada.consulta}</b></h3>
