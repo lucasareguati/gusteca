@@ -6,12 +6,6 @@ const consultaCtrl = {};
 
 
 consultaCtrl.getConsultas = async (req, res) => {
-    /*const consultas = await Consulta.findAll(
-        {where:{
-            id_platillo: req.params.idPlatillo
-    }});
-    res.json(consultas);*/
-
     const consulta = await sequelize.query(`SELECT * FROM consulta INNER JOIN usuarioConsulta ON consulta.id_platillo = usuarioConsulta.id_platillo WHERE consulta.id_consulta = usuarioConsulta.id_consulta and usuarioConsulta.id_platillo = ${req.params.idPlatillo}`)
     res.json(consulta);
 }   

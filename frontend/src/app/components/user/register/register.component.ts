@@ -11,7 +11,7 @@ import { auth } from 'firebase';
 import 'firebase/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
-
+ 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -26,8 +26,7 @@ export class RegisterComponent implements OnInit {
   pass2: string;
   usuarioExiste: Boolean;
   usuarios: [];
-  usuarioNuevo: string = this.usuarioService.selectedUsuario.nombre_usuario;
-
+  nombre_user = '';
   // tslint:disable-next-line:max-line-length
   constructor(private router: Router, private authService: AuthService, private http: HttpClient, private usuarioService: UsuarioService, private afsauth: AngularFireAuth) {
     this.getUsers();
@@ -44,7 +43,7 @@ export class RegisterComponent implements OnInit {
     let exist = true;
     for (const user of this.usuarios) {
       const nombre: string = user['nombre_usuario'];
-      if ( nombre.toLocaleLowerCase() === this.usuarioNuevo.toLocaleLowerCase()) {
+      if ( nombre.toLocaleLowerCase() === this.nombre_user.toLocaleLowerCase()) {
         exist = false;
       }
     }
@@ -92,3 +91,4 @@ export class RegisterComponent implements OnInit {
   }
 
 }
+ 

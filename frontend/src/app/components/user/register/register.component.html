@@ -9,35 +9,37 @@
             <div class="md-form">
           
             <div class="input-field">
-                <input mdbInput type="text" id="nUser" class="form-control mb-4" name="nombre_usuario" #nombre_usuario="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre_usuario" 
+                <input mdbInput type="text" id="nUser" class="form-control mb-4" name="nombre_usuario" #nombre_usuario="ngModel" [(ngModel)]="nombre_user" 
                         minlength="8" maxlength="20" required>
                 <label for="nUser">Nombre de Usuario</label>
-                <!--<div *ngIf="!confirmarNombreUsuario()">
-                  <mdb-icon fas icon="exclamation-triangle"></mdb-icon>
-                </div>-->
+                <div *ngIf="!confirmarNombreUsuario()">
+                  Nombre de usuario existente <mdb-icon fas icon="exclamation-triangle"></mdb-icon>
+                </div>
                 <div>
                   <div *ngIf="nombre_usuario.touched && !nombre_usuario.valid">
                     <div *ngIf="nombre_usuario.errors.required">Ingrese un nombre de usuario.</div>
                     <div *ngIf="nombre_usuario.errors.minlength">Nombre de usuario debe ser de al menos {{nombre_usuario.errors.minlength.requiredLength}} caracteres.</div>
                   </div>
                 </div>
-            
                 <div class="md-form">
-            <input mdbInput id="pass" type="password" class="form-control mb-4" name="pass1" #contrasenia="ngModel" [(ngModel)]="pass1" 
-             required>
-            <label for="pass">Contraseña</label> 
-                  </div>
+                   <input mdbInput id="pass" type="password" class="form-control mb-4" name="pass" #pass="ngModel" [(ngModel)]="pass1" minlength="8" required>
+                   <label for="pass">Contraseña</label> 
+                   <div *ngIf="pass.touched && !pass.valid">
+                    <div *ngIf="pass.errors.minlength">Minimo 8 caracteres</div>
+                  </div>        
+                </div>
 
                   <div class="md-form">      
-            <input mdbInput type="password" id="pass2" class="form-control mb-4" name="pass2" #contrasenia2="ngModel" [(ngModel)]="pass2">
+            <input mdbInput type="password"  minlength="8" id="pass2" class="form-control mb-4" name="pass2" #passs="ngModel" [(ngModel)]="pass2" required>
             <label for="pass2">Repita la contraseña</label>
+                  
+                  <div *ngIf="passs.touched && !passs.valid">
+                    <div *ngIf="passs.errors.minlength">Minimo 8 caracteres</div>
                   </div>
-                  <div *ngIf="!confirmarPass() && contrasenia.touched && contrasenia2.touched ; else distintas">
+                  <div *ngIf="!confirmarPass() && pass.touched && passs.touched ; else distintas">
                     <p> Las contraseñas no coinciden <mdb-icon fas icon="exclamation-triangle"></mdb-icon> </p>                 
                   </div>
-                  <ng-template #distintas>
-                    
-                  </ng-template>
+                </div>
 
                   <div class="md-form">
             <input mdbInput type="text" id="nombre" class="form-control mb-4" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioService.selectedUsuario.nombre" 
