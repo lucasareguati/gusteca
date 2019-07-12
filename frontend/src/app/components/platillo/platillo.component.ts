@@ -17,30 +17,17 @@ export class PlatilloComponent implements OnInit {
   constructor(private platilloService: PlatilloService) { }
 
   ngOnInit() {
-    // this.getPlatillos();
   }
+/*
+  const cards = document.querySelectorAll('.card');
 
-  addPlatillo(form: NgForm) {
-    this.platilloService.postPlatillo(form.value)
-    .subscribe(res => {
-      this.limpiarForm(form);
-      M.toast({html: 'Platillo guardado exitosamete'});
-      this.getPlatillos();
-    });
-  }
-
-  getPlatillos() {
-    this.platilloService.getPlatillos().subscribe(res => {
-      this.platilloService.platillos = res as Platillo[];
-      console.log(res);
-    });
-  }
-
-  limpiarForm(form?: NgForm) {
-    if (form) {
-      form.reset();
-      this.platilloService.selectedPlatillo = new Platillo();
+  function transition() {
+    if (this.classList.contains('active')) {
+      this.classList.remove('active')
+    } else {
+      this.classList.add('active');
     }
-
   }
+  cards.forEach(card => card.addEventListener('click', transition)); */
+
 }

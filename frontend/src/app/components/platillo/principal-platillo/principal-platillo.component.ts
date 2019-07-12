@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PlatilloService } from '../../../services/platillo.service';
 import { Platillo } from 'src/app/models/platillo';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -13,12 +14,16 @@ import { Router } from '@angular/router';
 })
 export class PrincipalPlatilloComponent implements OnInit {
 
-  constructor(private platilloService: PlatilloService, private router: Router) { }
+  constructor(private platilloService: PlatilloService, private router: Router,private _sanitizer: DomSanitizer) { }
   pageActual: Number = 1;
 
   ngOnInit() {
     this.getPlatillos();
   }
+
+  getBackground(image) {
+    return this._sanitizer.bypassSecurityTrustStyle(`linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${image})`);
+}
 
   getPlatillos() {
     this.platilloService.getPlatillos().subscribe(res => {
