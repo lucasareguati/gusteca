@@ -20,7 +20,7 @@
       </li>
       <li class="dropdown" mdbDropdown>
       <!--  <div class="dropdown" mdbDropdown>-->
-        <a class="nav-link" mdbDropdownToggle *ngIf="authService.isAdmn">Menú administración</a>
+        <a class="nav-link" mdbDropdownToggle (click)="actualizarSinRespuesta()" *ngIf="authService.isAdmn">Menú administración</a>
           <!--<button mdbDropdownToggle mdbBtn color="primary" class="dropdown-toggle waves-light" type="button"
             mdbWavesEffect>
             Dropdown primary

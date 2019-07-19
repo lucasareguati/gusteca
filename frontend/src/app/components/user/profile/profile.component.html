@@ -91,22 +91,31 @@
       <td>{{carrito.diametro}}</td>
       <td>{{carrito.cantidad}}</td>
       <td>${{carrito.precio}}</td>
-      <td>${{carrito.cantidad * carrito.precio}}</td>
+      <td>${{carrito.cantidad * carrito.precio}} <a (click)="eliminarCarrito(carrito.id_carrito)" > 
+        <i class="material-icons">delete</i> 
+      </a> </td>
     </tr>
+    <button type="button" (click)="comprar(carritoService.carritos)" mdbBtn color="success" mdbWavesEffect>Comprar</button>
+ 
   </tbody>
 </table>
 
-<!--
-<section>
-  <mdb-card class="w-75 mb-3" *ngFor="let carrito of carritoService.carritos">
-    <mdb-card-body>
-      <mdb-card-title>
-        <h5>{{carrito.modelo}} {{carrito.linea}} {{carrito.diametro}}"  {{carrito.cantidad}} ${{carrito.precio}}</h5>
-      </mdb-card-title>
-      
-    </mdb-card-body>
-  </mdb-card>
+<hr>
 
-
+<section *ngIf="compraService.datosPendiente">
+<div class="container">
+<mdb-card class="text-center">
+  <mdb-card-header>Mercadopago pendiente</mdb-card-header>
+  <mdb-card-body>
+    <mdb-card-title>
+      <h5>Tienes pendiente este ticket...</h5>
+    </mdb-card-title>
+    <div *ngFor="let item of compraService.datosPendiente.items">
+    <mdb-card-text>{{item.quantity}} {{item.title}} ${{item.unit_price * item.quantity}}</mdb-card-text>
+  </div>
+    <a href="{{compraService.datosPendiente.url}}" mdbBtn color="primary">Ver más</a>
+  </mdb-card-body>
+  <mdb-card-footer class="text-muted">Expira {{compraService.datosPendiente.fechaExpiracion}}</mdb-card-footer>
+</mdb-card>
+</div>
 </section>
--->

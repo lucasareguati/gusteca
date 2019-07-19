@@ -27,8 +27,8 @@ export class CarritoService {
     return this.http.post(this.URL_API, carrito);
   }
 
-  putCarrito(carrito: Carrito) {
-    return this.http.put(this.URL_API + `${carrito.id_carrito}`, carrito);
+  deleteCarrito(id_carrito: Number) {
+    return this.http.delete(this.URL_API + `${id_carrito}`);
   }
 
 }

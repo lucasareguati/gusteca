@@ -12,6 +12,8 @@ import { Carrito } from 'src/app/models/carrito';
 import { Carro } from 'src/app/models/carro';
 import { Idcarrito } from 'src/app/models/id_carrito';
 import { CarroService } from 'src/app/services/carro.service';
+import { CompraService } from 'src/app/services/compra.service';
+import { Compra } from 'src/app/models/compra';
 
 
  
@@ -31,7 +33,7 @@ export class DetallePlatilloComponent implements OnInit {
   constructor(private usuarioService: UsuarioService, private consultaService: ConsultaService,
               private platilloService: PlatilloService, private activatedRoute: ActivatedRoute,
               private auth: AuthService, private navbar: NavbarComponent, private carroService: CarroService,
-              private carritoService: CarritoService) {
+              private carritoService: CarritoService, private compraService: CompraService ) {
 
 
   }
@@ -64,6 +66,10 @@ export class DetallePlatilloComponent implements OnInit {
     });
   }
 
+  comprar() {
+    console.log('comprar');
+  }
+
   responder(consulta) {
     consulta.respuesta = this.respuesta;
     console.log(consulta);
@@ -83,7 +89,7 @@ export class DetallePlatilloComponent implements OnInit {
     this.carritoService.postCarrito(carrito).subscribe((res) => {
       console.log('Carrito guardado con éxito');
       const id_carrito = res as Idcarrito;
-      carro.id_carrito = id_carrito.id_carrito; 
+      carro.id_carrito = id_carrito.id_carrito;
       carro.id_usuario = this.usuarioService.usuarioLogueado.id_usuario;
 
       this.carroService.postCarro(carro).subscribe(() => {

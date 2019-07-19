@@ -16,6 +16,7 @@ const carro = sequelize.define('carro',{
         type: Sequelize.BOOLEAN,
         defaultValue: true,
     }
+    
 },{
     tableName: "carro",
     timestamps: false

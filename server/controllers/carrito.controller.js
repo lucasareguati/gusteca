@@ -7,7 +7,7 @@ const carritoCtrl = {};
 
 carritoCtrl.getCarritos = async(req, res) => {
     const carritos = await sequelize.query(`SELECT * FROM carritoCarro WHERE email = '${req.params.email}'`);
-                                                
+    console.log(carritos[0]);
     res.json(carritos[0]);
 }
 
@@ -20,9 +20,20 @@ carritoCtrl.createCarrito = async(req, res) => {
 
 
 
+carritoCtrl.deleteCarrito = async(req, res) => {
+    const id = req.params.id_carrito;
+
+    await sequelize.query(`DELETE FROM Carrito where id_carrito = ${id}`).then(
+        res.json({status: 'Eliminado correctamente'})
+    );
+
+}
+
 carritoCtrl.editCarrito = async(req, res) => {
     const id = req.params.idCarrito;
-
+    console.log(req.body);
+    
+    
     const carritoActualizado = {
         cantidad: req.body.cantidad
     }
@@ -31,7 +42,6 @@ carritoCtrl.editCarrito = async(req, res) => {
             id_carrito: id
         }
     });
-    res.json(carritoActualizado);
 }
 
 

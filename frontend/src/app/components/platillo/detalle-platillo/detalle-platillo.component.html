@@ -58,8 +58,9 @@
             <div>
               <h6>Cantidad </h6>
               <input mdbInput type="number" value="1"  style="width:40px;height:30px" #cant="ngModel" [(ngModel)]="cantidadPlatillo" >
-              <button mdbBtn type="button" (click)="agregarAlCarrito(platilloService.platillo)" color="success" mdbWavesEffect><mdb-icon fas icon="shopping-cart"></mdb-icon> Agregar al carrito</button>
-            
+              <button mdbBtn type="button" (click)="agregarAlCarrito(platilloService.platillo)" color="light" mdbWavesEffect><mdb-icon fas icon="shopping-cart"></mdb-icon> Agregar al carrito</button>
+              <button type="button" mdbBtn  color="success" mdbWavesEffect>Comprar ahora</button>
+
           </div>
           </section>
           
@@ -84,13 +85,13 @@
     <mdb-card-body>
       
       <mdb-card-title>
-        <h5>{{consulta.nombre_usuario}}</h5>
+        <h5> <mdb-icon fas icon="user"></mdb-icon> {{consulta.nombre_usuario}}</h5>
       </mdb-card-title>
       
       <mdb-card-text>
-        {{consulta.consulta}}
+       <p> <mdb-icon fas icon="comment-alt"></mdb-icon> {{consulta.consulta}} </p>
       </mdb-card-text>
-      <p>{{consulta.respuesta}}</p>
+      <p> {{consulta.respuesta}}</p>
       <div *ngIf="consulta.respuesta == '' && auth.isAdmn" >
         <!--Material textarea-->
 <div class="md-form md-outline">

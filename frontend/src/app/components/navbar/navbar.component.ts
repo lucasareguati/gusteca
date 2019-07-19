@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
   public app_name = 'Gusteka Drums';
   public isLogged = false;
   public isAdmin = false;
+  public sinRespuesta: [];
 
 
   ngOnInit() {
@@ -39,6 +40,13 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  actualizarSinRespuesta() {
+    this.consultaService.getConsultasSinRespuesta().subscribe((res) => {
+      this.sinRespuesta = res[0] as [];
+      this.consultaService.sinRespuestaNumero = this.sinRespuesta.length;
+      console.log('Actualizando...');
+    });
+  }
 
   onLogout() {
     this.afsAuth.auth.signOut();
