@@ -4,7 +4,7 @@ export class Compra {
     constructor(id_compra = null,
         id_carro = null,
         id_usuario = null,
-        id_mercadopago = null,
+        id_order = null,
         estado = null,
         fechaCompra = null,
         horaCompra = null,
@@ -12,7 +12,7 @@ export class Compra {
             this.id_compra = id_compra;
             this.id_carro = id_carro;
             this.id_usuario = id_usuario;
-            this.id_mercadopago = id_mercadopago;
+            this.id_order = id_order;
             this.estado = estado;
             this.fechaCompra = fechaCompra;
             this.horaCompra = horaCompra;
@@ -21,7 +21,7 @@ export class Compra {
     id_compra: number;
     id_carro: number;
     id_usuario: number;
-    id_mercadopago: string;
+    id_order: number;
     estado: string;
     fechaCompra: Date;
     horaCompra: Time;

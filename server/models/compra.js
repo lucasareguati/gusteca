@@ -8,9 +8,11 @@ const compra = sequelize.define('compra',{
     },
     id_carro: Sequelize.INTEGER,
     id_usuario: Sequelize.INTEGER,
-    id_mercadopago: Sequelize.STRING,
+    id_order: Sequelize.INTEGER,
     estado: Sequelize.STRING,
-    fechacompra: Sequelize.DATE,
+    fechacompra:{
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW},
     horacompra: Sequelize.STRING,
     total: Sequelize.INTEGER
 },{

@@ -17,3 +17,11 @@
   .user-details h5 {
     margin: 15px 0 5px 0;
   }
+
+.alinear-izq {
+  text-align: left;
+}
+
+.alinear-der {
+  text-align: right;
+}

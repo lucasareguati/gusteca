@@ -5,8 +5,10 @@ const mercadopago = require('mercadopago');
 const carroCtrl = {};
 
 carroCtrl.getCarros = async(req, res) => {
-    const carros = await sequelize.query(`SELECT carro.id_carrito, carro.comprado FROM carro, cliente cli WHERE carro.id_usuario = cli.id_usuario and cli.email = '${req.params.email}'`);
+    const carros = await sequelize.query(`SELECT carro.id_carrito, carro.comprado FROM carro, cliente cli WHERE carro.activo = true and carro.id_usuario = cli.id_usuario and cli.email = '${req.params.email}'`);
+    console.log('carro: ' + carros[0]);
     res.json(carros[0]);
+    
 }
 
 carroCtrl.createCarro = async(req, res) => {

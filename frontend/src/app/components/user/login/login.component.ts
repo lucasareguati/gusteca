@@ -13,7 +13,7 @@ import { Usuario } from 'src/app/models/usuario';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
-}) 
+})
 export class LoginComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
@@ -35,10 +35,11 @@ export class LoginComponent implements OnInit {
       this.authService.loginEmailUser(this.email, this.pass).then((res ) => { // autenticacion con firebase
         const user = auth().currentUser;
         if (user.emailVerified.valueOf()) {
-        this.usuarioService.getUsuario('/' + this.email).subscribe( res => { // consulta a la BBDD
-          
-          console.log(res[0]); // En la posicion 0 de la respuesta se encuentra el objeto
-          this.usuarioService.usuarioLogueado = res[0] as Usuario;
+        this.usuarioService.getUsuario('/' + this.email).subscribe( resp => { // consulta a la BBDD
+
+          console.log(resp[0]); // En la posicion 0 de la respuesta se encuentra el objeto
+          this.usuarioService.usuarioLogueado = resp[0] as Usuario;
+          console.log(this.usuarioService.usuarioLogueado);
           if (!this.usuarioService.usuarioLogueado.activo) {
             this.onLogoutUser();
             console.log('Usuario inhabilitado');
@@ -81,15 +82,14 @@ export class LoginComponent implements OnInit {
 
   verificar() { // Si ya inicio sesion lo trae de la BBDD sino lo registra
     const user = auth().currentUser;
-
+ 
       console.log(user.displayName, user.email);
-      this.usuarioService.getUsuario('/' + user.email).subscribe( res => {
+      this.usuarioService.getUsuario(user.email).subscribe( res => {
         this.usuarioService.usuarioLogueado = res[0] as Usuario;
-        if (!this.usuarioService.usuarioLogueado.activo ) {
-          this.onLogoutUser();
-          console.log('usuario deshabilitado');
-        }
+        console.log(res[0]);
+
         if (res[0] === undefined) { // no esta registrado en BBDD
+          console.log('USUARIO NO REGISTRADO');
           const usuario = new Usuario;
           usuario.email = user.email;
           usuario.nombre = user.displayName;
@@ -98,8 +98,13 @@ export class LoginComponent implements OnInit {
           this.usuarioService.usuarioLogueado = usuario;
           console.log(usuario);
           this.usuarioService.postUsuario(usuario).subscribe( resp => {
-            console.log('CORRECTAMENTE');
+            console.log('REGISTRADO CORRECTAMENTE');
           });
+        } else {
+          if (!res[0].activo ) {
+            this.onLogoutUser();
+            console.log('usuario deshabilitado');
+          }
         }
       });
   }

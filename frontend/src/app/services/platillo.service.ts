@@ -7,8 +7,8 @@ import {  } from '../components/platillo/platillo.component';
   providedIn: 'root'
 })
 export class PlatilloService {
-
-  readonly URL_API = 'http://localhost:3000/platillo';
+ // readonly URL_API = 'https://gusteca.herokuapp.com/platillo/';
+ readonly URL_API = 'http://localhost:3000/platillo/';
 
   platillo: Platillo;
   platillos: Platillo[];
@@ -27,7 +27,7 @@ export class PlatilloService {
   }
 
   putPlatillo(platillo: Platillo) {
-    return this.http.put(this.URL_API + `/${platillo.id_platillo}`, platillo );
+    return this.http.put(this.URL_API + `${platillo.id_platillo}`, platillo );
   }
 
   deletePlatillo(id_platillo: string) {

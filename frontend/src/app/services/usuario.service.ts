@@ -10,6 +10,8 @@ import { } from '../components/user/register/register.component';
 
 export class UsuarioService {
 
+
+  //readonly URL_API = 'https://gusteca.herokuapp.com/usuario';
   readonly URL_API = 'http://localhost:3000/usuario';
 
   usuarioLogueado: Usuario;
@@ -31,7 +33,7 @@ export class UsuarioService {
   }
 
   getUsuario(correo: string) {
-    return this.http.get(this.URL_API + `${correo}`);
+    return this.http.get(this.URL_API + `/${correo}`);
   }
 
   postUsuario(usuario: Usuario) {
@@ -39,7 +41,7 @@ export class UsuarioService {
   }
 
   putUsuario(usuario: Usuario) {
-    return this.http.put(this.URL_API + `/${usuario.id_usuario}`, usuario);
+    return this.http.put(this.URL_API + `${usuario.id_usuario}`, usuario);
   }
 
 

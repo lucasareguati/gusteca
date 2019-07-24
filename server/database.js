@@ -2,7 +2,8 @@ var Sequelize = require('sequelize');
 
 //Conexión de sequelize con Postgres
 
-const sequelize = new Sequelize('postgres://postgres:39842189@localhost:5432/gustekadb');
+const url = process.env.DATABASE_URL || 'postgres://postgres:39842189@localhost:5432/gustekadb';
+const sequelize = new Sequelize(url);
 
 //Autenticacion 
 sequelize.authenticate().then(()=>{

@@ -6,7 +6,7 @@ const carritoCtrl = {};
 
 
 carritoCtrl.getCarritos = async(req, res) => {
-    const carritos = await sequelize.query(`SELECT * FROM carritoCarro WHERE email = '${req.params.email}'`);
+    const carritos = await sequelize.query(`SELECT * FROM carritoCarro WHERE email = '${req.params.email}' and activo = true`);
     console.log(carritos[0]);
     res.json(carritos[0]);
 }

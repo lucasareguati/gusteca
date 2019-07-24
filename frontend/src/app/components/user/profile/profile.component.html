@@ -22,8 +22,6 @@
   </div>
 </section>
 
-
-
 <div mdbModal #frame="mdbModal" style="overflow-y: auto" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -70,9 +68,8 @@
   </div>
 </div>
 
-
 <h3>Carro </h3>
-
+<div *ngIf="carritoService.carritos.length != 0; else elseCarro">
 <table mdbTable striped="true">
   <thead>
     <tr>
@@ -99,23 +96,118 @@
  
   </tbody>
 </table>
+</div>
 
+<ng-template #elseCarro>
+
+  <div class="container">
+    <h1>Tienes el carro vacío <i class="material-icons">remove_shopping_cart</i></h1>
+  </div>
+
+</ng-template>
 <hr>
 
-<section *ngIf="compraService.datosPendiente">
-<div class="container">
+<section *ngIf="compraService.datosPendiente != undefined">
+<div class="container" *ngFor="let elem of compraService.datosPendiente">
 <mdb-card class="text-center">
   <mdb-card-header>Mercadopago pendiente</mdb-card-header>
   <mdb-card-body>
     <mdb-card-title>
       <h5>Tienes pendiente este ticket...</h5>
     </mdb-card-title>
-    <div *ngFor="let item of compraService.datosPendiente.items">
+    <div *ngFor="let item of elem.items">
     <mdb-card-text>{{item.quantity}} {{item.title}} ${{item.unit_price * item.quantity}}</mdb-card-text>
   </div>
-    <a href="{{compraService.datosPendiente.url}}" mdbBtn color="primary">Ver más</a>
+    <a href="{{elem.url}}" mdbBtn color="primary">Ver más</a>
   </mdb-card-body>
-  <mdb-card-footer class="text-muted">Expira {{compraService.datosPendiente.fechaExpiracion}}</mdb-card-footer>
+  <mdb-card-footer class="text-muted">Expira {{elem.fechaExpiracion}}</mdb-card-footer>
 </mdb-card>
 </div>
+</section>
+
+
+
+<section>
+  <table mdbTable striped="true">
+    <thead>
+      <tr>
+        <th>#Orden</th>
+        <th>Fecha</th>
+        <th>Hora</th>
+        <th>Total</th>
+        <th>Ticket</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let compra of compraService.compras">
+          <td>{{compra.id_order}}</td>
+          <td>{{compra.fecha}}</td>
+          <td>{{compra.hora}}</td>
+          <td>${{compra.total}}</td>
+          <td> <a (click)="ticket.show()"> 
+            <i class="material-icons">description</i>
+          </a></td>
+
+<div mdbModal #ticket="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Ticket de compra</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="ticket.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <h6 class="alinear-izq"><b>Numero de orden:</b> {{compra.id_order}}</h6>
+          <h6 class="alinear-izq"><b>Fecha:</b> {{compra.fecha}}</h6>
+          <h6 class="alinear-izq"><b>Hora:</b> {{compra.hora}}</h6>
+          <!--<div class="container" *ngFor="let plato of compra.platillos">-->
+              <table mdbTable>
+                  <thead>
+                    <tr>
+                      <th>Modelo</th>
+                      <th>Linea</th>
+                      <th>Diametro</th>
+                      <th>Cantidad</th>
+                      <th>Precio</th>
+                      <th>Subtotal</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr mdbTableCol *ngFor="let plato of compra.platillos">
+                      <th scope="row">{{plato.modelo}}</th>
+                      <td>{{plato.linea}}</td>
+                      <td>{{plato.diametro}}"</td>
+                      <td>{{plato.cantidad}}</td>
+                      <td>{{plato.precio}}</td>
+                      <td>${{plato.precio * plato.cantidad}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h6 class="alinear-der"><b>Total</b> ${{compra.total}}</h6>
+        </div>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect (click)="ticket.hide()">Cerrar</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+
+
+        </tr>
+    </tbody>
+  </table>
+
 </section>

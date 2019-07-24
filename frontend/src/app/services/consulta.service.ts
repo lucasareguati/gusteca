@@ -6,7 +6,7 @@ import { Consulta } from '../models/consulta';
   providedIn: 'root'
 })
 export class ConsultaService {
-
+  //readonly URL_API = 'https://gusteca.herokuapp.com/consulta/';
   readonly URL_API = 'http://localhost:3000/consulta/';
 
   consultas: Consulta[];

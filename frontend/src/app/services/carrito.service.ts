@@ -9,7 +9,9 @@ import {Carrito} from '../models/carrito';
 
 export class CarritoService {
 
+  
   readonly URL_API = 'http://localhost:3000/carrito/';
+  //readonly URL_API = 'https://gusteca.herokuapp.com/carrito';
 
   totalCarrito: number;
   carritos: Carrito[];
@@ -20,7 +22,7 @@ export class CarritoService {
   }
 
   getCarritos(email: string) {
-    return this.http.get(this.URL_API + `${email}`);
+    return this.http.get(this.URL_API + `/${email}`);
   }
 
   postCarrito(carrito: Carrito) {
@@ -28,7 +30,7 @@ export class CarritoService {
   }
 
   deleteCarrito(id_carrito: Number) {
-    return this.http.delete(this.URL_API + `${id_carrito}`);
+    return this.http.delete(this.URL_API + `/${id_carrito}`);
   }
 
 }

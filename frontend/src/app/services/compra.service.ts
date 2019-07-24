@@ -7,10 +7,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CompraService {
   readonly URL_API = 'http://localhost:3000/compra/';
-
-  compras: Compra[];
+  //readonly URL_API = 'https://gusteca.herokuapp.com/compra/';
+  compras: [];
   selecteCompra: Compra;
-  datosPendiente: {};
+  datosPendiente: [];
 
   constructor(private http: HttpClient) {
     this.selecteCompra = new Compra();
