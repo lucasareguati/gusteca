@@ -1,27 +1,26 @@
-<section id="profile" class="container">
-  <div class="row mt-5">
-    <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center card">
-      <div class="row">
-        <div class="col-lg-12 col-sm-12 col-12 profile-header"></div>
-      </div>
-      <div class="row user-details">
-          <a (click)="frame.show()" (click)="editarUsuario(usuario)"> 
-              <i class="material-icons">edit</i> Editar perfil
-            </a>
-        <div class="col-12">
-          <h3>{{usuario.nombre_usuario}}</h3>
-          
-          <h4>{{usuario.nombre}}</h4>
-          <h4>{{usuario.email}}</h4>
 
-          <hr>
-          <span>{{usuario.tel}}</span> 
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
+<!--PERFIL-->
+<div class="alineada">
+<mdb-card>
+    <mdb-card-body>
+      <mdb-card-title>
+        <h4 style="text-align: center">Mi perfil</h4>
+        <hr>
+      </mdb-card-title>
+      <h5><mdb-cards-text><b>Nombre:</b> {{usuario.nombre}}</mdb-cards-text></h5>
+      <h5><mdb-cards-text><b>Nombre de usuario:</b> {{usuario.nombre_usuario}} </mdb-cards-text></h5>
+      <h5><mdb-cards-text><b>Email:</b> {{usuario.email}}</mdb-cards-text></h5>
+      <h5><mdb-cards-text><b>Tel:</b> {{usuario.tel}}</mdb-cards-text></h5>
+      <div class="flex-row">
+        
+        <a class="card-link" (click)="frame.show()" (click)="editarUsuario(usuario)">Editar perfil <i class="material-icons">edit</i></a>
+      </div>
+    </mdb-card-body>
+</mdb-card>
+</div>
+
+<!--EDITAR PERFIL-->
 <div mdbModal #frame="mdbModal" style="overflow-y: auto" class="modal fade left" id="frameModalTop" tabindex="-1" role="dialog"
   aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -68,6 +67,9 @@
   </div>
 </div>
 
+
+<!--CARRO-->
+<div class="alineada-carro">
 <h3>Carro </h3>
 <div *ngIf="carritoService.carritos.length != 0; else elseCarro">
 <table mdbTable striped="true">
@@ -79,6 +81,7 @@
       <th>Cantidad</th>
       <th>Precio</th>
       <th>Total</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -88,9 +91,10 @@
       <td>{{carrito.diametro}}</td>
       <td>{{carrito.cantidad}}</td>
       <td>${{carrito.precio}}</td>
-      <td>${{carrito.cantidad * carrito.precio}} <a (click)="eliminarCarrito(carrito.id_carrito)" > 
-        <i class="material-icons">delete</i> 
-      </a> </td>
+      <td>${{carrito.cantidad * carrito.precio}}  </td>
+      <td><a (click)="eliminarCarrito(carrito.id_carrito)" > 
+          <i class="material-icons">delete</i> 
+        </a></td>
     </tr>
     <button type="button" (click)="comprar(carritoService.carritos)" mdbBtn color="success" mdbWavesEffect>Comprar</button>
  
@@ -107,27 +111,10 @@
 </ng-template>
 <hr>
 
-<section *ngIf="compraService.datosPendiente != undefined">
-<div class="container" *ngFor="let elem of compraService.datosPendiente">
-<mdb-card class="text-center">
-  <mdb-card-header>Mercadopago pendiente</mdb-card-header>
-  <mdb-card-body>
-    <mdb-card-title>
-      <h5>Tienes pendiente este ticket...</h5>
-    </mdb-card-title>
-    <div *ngFor="let item of elem.items">
-    <mdb-card-text>{{item.quantity}} {{item.title}} ${{item.unit_price * item.quantity}}</mdb-card-text>
-  </div>
-    <a href="{{elem.url}}" mdbBtn color="primary">Ver más</a>
-  </mdb-card-body>
-  <mdb-card-footer class="text-muted">Expira {{elem.fechaExpiracion}}</mdb-card-footer>
-</mdb-card>
 </div>
-</section>
 
-
-
-<section>
+<!--COMPRAS-->
+<section>  
   <table mdbTable striped="true">
     <thead>
       <tr>
@@ -202,12 +189,31 @@
       </div>
     </div>
     <!--/.Content-->
-  </div>
-</div>
-
-
-        </tr>
+    </div>
+    </div>
+    </tr>
     </tbody>
   </table>
 
 </section>
+
+
+
+<!--ORDENES PEDIENTES-->
+<section *ngIf="compraService.datosPendiente != undefined">
+    <div class="container" *ngFor="let elem of compraService.datosPendiente">
+    <mdb-card class="text-center">
+      <mdb-card-header>Mercadopago pendiente</mdb-card-header>
+      <mdb-card-body>
+        <mdb-card-title>
+          <h5>Tienes pendiente este ticket...</h5>
+        </mdb-card-title>
+        <div *ngFor="let item of elem.items">
+        <mdb-card-text>{{item.quantity}} {{item.title}} ${{item.unit_price * item.quantity}}</mdb-card-text>
+      </div>
+        <a href="{{elem.url}}" mdbBtn color="primary">Ver más</a>
+      </mdb-card-body>
+      <mdb-card-footer class="text-muted">Expira {{elem.fechaExpiracion}}</mdb-card-footer>
+    </mdb-card>
+    </div>
+    </section>

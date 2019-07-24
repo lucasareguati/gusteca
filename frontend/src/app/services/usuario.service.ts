@@ -41,7 +41,7 @@ export class UsuarioService {
   }
 
   putUsuario(usuario: Usuario) {
-    return this.http.put(this.URL_API + `${usuario.id_usuario}`, usuario);
+    return this.http.put(this.URL_API + `/${usuario.id_usuario}`, usuario);
   }
 
 

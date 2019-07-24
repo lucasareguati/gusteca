@@ -25,3 +25,22 @@
 .alinear-der {
   text-align: right;
 }
+
+.alineada {
+  float: left;
+  width: 33%;
+  margin-bottom: 2%;
+  vertical-align: top;
+  margin: 20px;
+}
+
+.alineada-carro {
+  float: left;
+  margin-bottom: 2%;
+  vertical-align: top;
+  margin: 20px;
+}
+
+.alineada-carro button{
+  float: right;
+}
