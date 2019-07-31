@@ -12,6 +12,9 @@ export class PlatilloService {
 
   platillo: Platillo;
   platillos: Platillo[];
+  crash: Array<Platillo> = [];
+  ride: Array<Platillo> = [];
+  hithat: Array<Platillo> = [];
   selectedPlatillo: Platillo;
 
   constructor( private http: HttpClient ) {

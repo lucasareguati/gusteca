@@ -9,9 +9,8 @@ import {Carrito} from '../models/carrito';
 
 export class CarritoService {
 
-  
-  readonly URL_API = 'http://localhost:3000/carrito/';
-  //readonly URL_API = 'https://gusteca.herokuapp.com/carrito';
+  //readonly URL_API = 'http://localhost:3000/carrito/';
+  readonly URL_API = 'https://gusteca.herokuapp.com/carrito';
 
   totalCarrito: number;
   carritos: Carrito[];

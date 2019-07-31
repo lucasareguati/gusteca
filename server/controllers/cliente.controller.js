@@ -27,12 +27,14 @@ clienteCtrl.getUsuario = async (req, res) => {
 }
 
 clienteCtrl.createUsuario = async(req, res) => {
-    await Cliente.create(req.body).catch(err => {
+    var id_user = null;
+    await Cliente.create(req.body).then(resp => {
+        console.log(resp.dataValues.id_usuario);
+        id_user = resp.dataValues.id_usuario;
+    }).catch(err => {
         console.log('Error: ' + err);
     });
-    res.send({
-        status: "Creado correctamente"
-    });
+    res.json({status: 'Creado Correctamente', id_usuario: id_user});
 }
 
 clienteCtrl.editUsuario = async(req, res) => {
@@ -51,8 +53,12 @@ clienteCtrl.editUsuario = async(req, res) => {
         where: {
             id_usuario: id
         }
-    });
-    res.json(usuarioActualizado);
+    }).then(res => {
+        res.json(res);
+    }).catch(err => {
+        res.json(err);  
+    })
+    //res.json(usuarioActualizado);
 }
 
 module.exports = clienteCtrl;

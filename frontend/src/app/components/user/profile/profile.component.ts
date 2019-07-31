@@ -21,10 +21,11 @@ export class ProfileComponent implements OnInit {
 
   constructor(private carroService: CarroService, private carritoService: CarritoService,
    private usuarioService: UsuarioService, private compraService: CompraService, private router: Router) {
-    this.obtenerPendiente();
+    
   }
 
   ngOnInit() {
+    this.obtenerPendiente();
     this.usuario = this.usuarioService.usuarioLogueado;
     this.obtenerCarritos();
     console.log('Compras');
@@ -33,7 +34,12 @@ export class ProfileComponent implements OnInit {
   }
 
   comprar(carro) {
-    if (this.compraService.datosPendiente === undefined) {
+    console.log(this.compraService.datosPendiente);
+    if ( this.compraService.datosPendiente.length === 0 ) {
+      console.log('LENGTH = 0');
+    }
+    if (this.compraService.datosPendiente === undefined || this.compraService.datosPendiente.length === 0) {
+      console.log(carro)
       this.compraService.postCompra(carro).subscribe((res) => {
         window.open(res['url']);
     });
@@ -48,7 +54,10 @@ export class ProfileComponent implements OnInit {
 
   guardarEdicionUsuario( editarUForm?: NgForm) {
     this.usuarioService.putUsuario(editarUForm.value).subscribe(res => {
-      console.log('Cambios Guardados con Éxito');
+      if (res['name'] === 'SequelizeUniqueConstraintError') {
+        window.alert('Telefono en uso por otro usuario');
+      }
+      
     });
   }
 
@@ -56,7 +65,6 @@ export class ProfileComponent implements OnInit {
     this.compraService.getMercadopagoPendiente(this.usuarioService.usuarioLogueado.id_usuario).subscribe( res => {
       this.compraService.datosPendiente = res['listaPreferences'];
       this.compraService.compras = res['listaFacturas'];
-      console.log(this.compraService.compras);
     });
   }
 

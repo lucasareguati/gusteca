@@ -7,9 +7,25 @@
 
   <div class="collapse navbar-collapse" id="mainNavbar">
     <ul class="navbar-nav mr-auto">
-      Logueado : {{isLogged}}
+      Logueado : {{authService.isLogged}}
     </ul> 
-     
+    
+    
+    <div class="btn-group" mdbDropdown>
+      <button mdbDropdownToggle type="button" mdbBtn color="primary" class="dropdown-toggle waves-light"
+        mdbWavesEffect>
+        Categorias
+      </button>
+    
+      <div class="dropdown-menu dropdown-primary">
+        <a class="dropdown-item" href="/ride">Ride</a>
+        <a class="dropdown-item" href="/hithat">Hit-Hat</a>
+        <a class="dropdown-item" href="/crash">Crash</a>
+        
+      </div>
+    </div>
+
+
     <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!authService.isLogged">
         <a class="nav-link" routerLink="/user/register">Registrarse
@@ -18,18 +34,16 @@
       <li class="nav-item" *ngIf="authService.isLogged">
         <a class="nav-link" routerLink="/user/profile">Perfil</a>
       </li>
-      <li class="dropdown" mdbDropdown>
+      <li class="dropdown" *ngIf="authService.isAdmn" mdbDropdown>
       <!--  <div class="dropdown" mdbDropdown>-->
-        <a class="nav-link" mdbDropdownToggle (click)="actualizarSinRespuesta()" *ngIf="authService.isAdmn">Menú administración</a>
-          <!--<button mdbDropdownToggle mdbBtn color="primary" class="dropdown-toggle waves-light" type="button"
-            mdbWavesEffect>
-            Dropdown primary
-          </button> -->
+        <a class="nav-link" mdbDropdownToggle (click)="actualizarSinRespuesta()" >Menú administración {{authService.isAdmn}}</a>
+          
         
           <div class="dropdown-menu dropdown-primary">
             <button class="dropdown-item" routerLink="/admin/editar-platillo">Editar platillo</button>
             <button class="dropdown-item" routerLink="/admin/cargar-platillo">Cargar platillo</button>
             <button class="dropdown-item" routerLink="/admin/users">Usuarios</button>
+            <button class="dropdown-item" routerLink="/admin/ventas">Ventas</button>
             <button class="dropdown-item" routerLink="/admin/consultas">Consultas  <mdb-badge style="margin-left: 5px" color="amber darken-2"> {{consultaService.sinRespuestaNumero}}</mdb-badge></button>
           </div>
        <!-- </div> -->

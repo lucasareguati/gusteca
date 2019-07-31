@@ -41,7 +41,14 @@
               
             <li class="specs-item">
               <strong>Stock</strong>
-              <span> {{platilloService.platillo?.stock}}</span>
+              
+                <span  *ngIf="platilloService.platillo?.stock > 0; else elseStock" > {{platilloService.platillo?.stock}}</span>
+                
+              
+              <ng-template  #elseStock>
+                <span> Sin stock</span>
+              </ng-template>
+              
             </li>
             
             <li class="specs-item">

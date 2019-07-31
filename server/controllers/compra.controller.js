@@ -1,5 +1,6 @@
 const Compra = require('../models/compra');
 const Carro = require('../models/carro');
+var moment = require('moment');
 const { sequelize, Sequelize } = require('../database');
 var mercadopago = require('mercadopago');
 
@@ -10,22 +11,22 @@ compraCtrl.ipn = async (req, res) => {
     if (req.body.action === 'payment.created') {
         const id_pago = req.body.data['id'];
         
-        await mercadopago.payment.findById(id_pago).then( async pago => {
-            if (pago.body['status'] === 'approved'){
-                const order_id =  pago.body['order']['id'];
-                await Compra.update({estado: 'Pagado'},
-                {where: {
-                    id_order: order_id
-                }}).then(() => {
-                    console.log('Pago actualizado con exito');
-                }).catch(error => console.log(error));
-            }
-        }).catch(err => console.log (err));
-        
+        mercadopago.payment.get(id_pago).then( pay => {
+            mercadopago.merchant_orders.get(pay.body.order.id).then(res => {
+                mercadopago.preferences.get(res.body.preference_id).then( pref => {
+                    Compra.update({estado: 'Pagado'}, {where: {
+                        id_preference: pref.body.id
+                    }}).then( ()=> {
+                        console.log('Pago actualizado correctamente');
+                    })
+                            
+                });
+            });
+    });         
+
     }  
     res.send({ok: 'si'}, 200);
 }
-
 
 function getId_carro(id_carro) {
     if (id_carro === 'DEFAULT') {
@@ -53,22 +54,22 @@ function bajaCarrito(id_carro) {
 
 compraCtrl.getCodigo = async (req, res) => {
     
-    const codigo = await sequelize.query(`SELECT id_order FROM compra WHERE id_usuario = ${req.params.id_usuario}`);
+    const codigo = await sequelize.query(`SELECT id_order FROM compra WHERE id_usuario = ${req.params.id_usuario} and estado <> 'Pagado' `);
     lista = [];
     listaPreferences = [];
     codigo[0].forEach(code => {
         lista.push(code.id_order);
     });
-
+    
     for (let i = 0; i < lista.length; i++) {
         await mercadopago.merchant_orders.findById(lista[i]).then( async order =>{
-            console.log(order);
-            // si no expiro
-            if (!order.body['cancelled']){
+            // si no expiro o no se pago aún
+            console.log(order.body['status']);
+            if (!order.body['cancelled'] || order.body['status'] === 'opened') {
+    
                 const preference_id = order.body['preference_id'];
                 
                 var elem = await mercadopago.preferences.findById(preference_id);
-                
                 datos = {
                     fechaExpiracion: elem.body.expiration_date_to,
                     fechaInicio: elem.body.expiration_date_from,
@@ -78,54 +79,58 @@ compraCtrl.getCodigo = async (req, res) => {
                 listaPreferences.push(datos);
             }
       
-    } );
+        });
     }
     
     listaCompras = [];
     obj = {};
-    const compras = await Compra.findAll({where: {
-        id_usuario: req.params.id_usuario,
-        estado: 'Pagado'
-    }});
+    const compras = await sequelize.query(`SELECT * FROM compra WHERE id_usuario = ${req.params.id_usuario} and estado = 'Pagado'`); //agregar = pagado
+    
     if (compras[0] != undefined){
-        //for 
         listaFacturas = [];
-        listaCompras.push(compras[0].dataValues);
-        console.log(listaCompras);
-        await sequelize.query(`SELECT * FROM factura WHERE id_compra = ${listaCompras[0].id_compra}`).then(platillos =>{
-        
-            factura = {
-                id_order: listaCompras[0].id_order,
-                fecha: listaCompras[0].fechacompra,
-                hora: listaCompras[0].horacompra,
-                total: listaCompras[0].total,
-                platillos: platillos[0]
-            }
-
-            //listaCompras[0] += (platillos[0]);
-            console.log(factura);
-            listaFacturas.push(factura);
+        compras[0].forEach(compra => {
+            listaCompras.push(compra);
         });
-        //endfor
-        obj = { listaFacturas, listaPreferences }
-    }
+        console.log(listaCompras);
+        for (let i = 0; i < listaCompras.length; i++) {
+            await sequelize.query(`SELECT * FROM factura WHERE id_compra = ${listaCompras[i].id_compra}`).then(platillos =>{
+                console.log('PLATILLOS');
+                console.log(platillos);
+                factura = {
+                    id_order: listaCompras[i].id_order,
+                    fecha: listaCompras[i].fechacompra,
+                    hora: listaCompras[i].horacompra,
+                    total: listaCompras[i].total,
+                    platillos: platillos[0]
+                }
 
+                //listaCompras[0] += (platillos[0]);
+                console.log(factura);
+                listaFacturas.push(factura);
+            
+            });
+        }
+        
+        obj = {listaFacturas, listaPreferences}
+    } else {
+        obj = {listaPreferences}
+    }
+    
     res.json(obj); 
 }
 
 
 
-function insert_Compra(id_Carro, user, response, horaHoy, total) {
+function insert_Compra(id_Carro, user, preference, order,fechaHoy, horaHoy, total) {
     if(id_Carro === -1) {
-        return (`INSERT INTO compra VALUES(DEFAULT, DEFAULT, ${user[0][0].id_usuario}, '${response.body.id}', 'Pendiente de pago', DEFAULT, '${horaHoy}', ${total})`);
+        return (`INSERT INTO compra VALUES(DEFAULT, DEFAULT, ${user[0][0].id_usuario}, '${preference}', '${order.body.id}', 'Pendiente de pago', '${fechaHoy}', '${horaHoy}', ${total})`);
     } else {
-        return (`INSERT INTO compra VALUES(DEFAULT, ${id_Carro}, ${user[0][0].id_usuario}, '${response.body.id}', 'Pendiente de pago', DEFAULT, '${horaHoy}', ${total})`);
-    }
+        return (`INSERT INTO compra VALUES(DEFAULT, ${id_Carro}, ${user[0][0].id_usuario}, '${preference}', '${order.body.id}', 'Pendiente de pago', '${fechaHoy}', '${horaHoy}', ${total})`);
+    };
 }
 
 compraCtrl.createCompra = async(req, res) => {
     email = req.body[0].email;
-    
    
     await sequelize.query(`SELECT * FROM cliente WHERE email = '${email}'`).then( async user =>{
         
@@ -133,8 +138,6 @@ compraCtrl.createCompra = async(req, res) => {
         compraNueva.id_usuario = user[0][0].id_usuario;
         compraNueva.estado = 'Pendiente de pago';
         compraNueva.total = req.body[0].precio;
-                           
-
 
         var now = new Date();
         const fromFecha = (now.toISOString().replace('Z', '')+'-00:00');
@@ -151,7 +154,7 @@ compraCtrl.createCompra = async(req, res) => {
             unit_price: plato.precio,
             quantity: plato.cantidad
             }
-            total += plato.precio;
+            total += plato.precio * plato.cantidad;
             items.push(item);
         });
 
@@ -162,12 +165,10 @@ compraCtrl.createCompra = async(req, res) => {
             items,
             notification_url: 'https://gusteca.herokuapp.com/compra/ipn'            
         };
-        var hoy = new Date();
-        const fechaHoy = hoy.getDate()+'-'+ hoy.getMonth()+'-'+hoy.getFullYear();
-        const horaHoy = hoy.getHours()+':'+ hoy.getMinutes()+':'+hoy.getSeconds();
         
+        const fechaHoy = moment().format('YYYY/MM/DD');
+        const horaHoy = moment().format('HH:mm:ss');
         await sequelize.query(`SELECT DISTINCT id_carro FROM carro where id_usuario = ${compraNueva.id_usuario} and activo = true`).then( (res)=> {
-            console.log(res)
             if (res[0].length == 0) {
                 console.log('no hay carro');
                 id_Carro = -1;
@@ -176,8 +177,7 @@ compraCtrl.createCompra = async(req, res) => {
                 id_Carro = (res[0][0].id_carro);
             }
         }).catch(err => console.log(err));
-
-        
+       
         // creo la preferencia
         await mercadopago.preferences.create(preference).then((response) => {
             
@@ -186,9 +186,9 @@ compraCtrl.createCompra = async(req, res) => {
             }
             //creo la orden y guardo el id en la tabla
                 mercadopago.merchant_orders.create(obj).then(order => {
-                        console.log(order.items);
-
-                        sequelize.query(insert_Compra(id_Carro,user, order, horaHoy, total))
+                        console.log('ORDER ID CREADA: ' + order.body.id);
+                        console.log(obj['preference_id']);
+                        sequelize.query(insert_Compra(id_Carro, user, obj['preference_id'], order,fechaHoy, horaHoy, total))
                             .then( async (result) => {
                                 a = [];
                                 // desactivo el carro
@@ -222,14 +222,38 @@ compraCtrl.createCompra = async(req, res) => {
 
     }).catch( err => { console.log('Eror 1: ' + err);}) 
 }  
-    
 
-
-
-/*
 compraCtrl.getCompras = async(req, res) => {
-    const compras = await Compra.findAll();
-    res.json(compras);
-}*/
+    listaCompras = [];
+    obj = {};
+    const compras = await Compra.findAll({where: {estado: 'Pagado'}});
+    for (let i = 0; i < compras.length; i++) {
+        const compra = compras[i];
+        listaCompras.push(compra.dataValues);
+        console.log(listaCompras);
+    }
+
+        listaFacturas = [];
+        for (let i = 0; i < listaCompras.length; i++) {
+            const compra = listaCompras[i];
+            
+            await sequelize.query(`SELECT * FROM factura WHERE id_compra = ${compra.id_compra}`).then(async platillos =>{
+                    await sequelize.query(`SELECT nombre FROM cliente WHERE id_usuario = ${compra.id_usuario}`).then( usuario => {
+                        
+                        factura = {
+                            id_order: listaCompras[i].id_order,
+                            nombre: usuario[0][0].nombre,
+                            fecha: listaCompras[i].fechacompra,
+                            hora: listaCompras[i].horacompra,
+                            total: listaCompras[i].total,
+                            platillos: platillos[0]
+                        }
+                    });
+                listaFacturas.push(factura);
+            });
+        }
+
+        res.json(listaFacturas);
+    }
 
 module.exports = compraCtrl;

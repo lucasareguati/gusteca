@@ -11,7 +11,7 @@ import { } from '../components/user/register/register.component';
 export class UsuarioService {
 
 
-  //readonly URL_API = 'https://gusteca.herokuapp.com/usuario';
+  // readonly URL_API = 'https://gusteca.herokuapp.com/usuario';
   readonly URL_API = 'http://localhost:3000/usuario';
 
   usuarioLogueado: Usuario;

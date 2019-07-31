@@ -99,11 +99,16 @@ export class LoginComponent implements OnInit {
           console.log(usuario);
           this.usuarioService.postUsuario(usuario).subscribe( resp => {
             console.log('REGISTRADO CORRECTAMENTE');
+            console.log(resp['id_usuario']);
+            this.usuarioService.usuarioLogueado.id_usuario = resp['id_usuario'];
           });
         } else {
           if (!res[0].activo ) {
             this.onLogoutUser();
-            console.log('usuario deshabilitado');
+            window.alert('usuario deshabilitado');
+          } else {
+            window.alert('llego aca');
+            this.authService.isLogged = true;
           }
         }
       });

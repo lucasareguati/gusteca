@@ -1,0 +1,25 @@
+<div class="display-2 text-center">Ride</div>
+
+
+<div class="card-deck">
+  <!-- Card-->
+  <ng-container *ngFor="let platillo of platilloService.ride | paginate: { itemsPerPage: 12, currentPage: pageActual} ">
+    <ng-container *ngIf="!platillo.baja">
+
+        <div class="cardContainer inactive" (click)="verPlatillo(platillo.id_platillo)" >
+            <div class="card">
+              <div class="side front">
+                <div class="img" [style.background-image]="getBackground(platillo.imagen)"></div>
+                <div class="info">
+                  <h2>{{platillo.linea}} {{platillo.modelo}}</h2>
+                  <hr>
+                  <h3 style="color: green">${{platillo.precio}}</h3>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+
+  </ng-container>
+  </ng-container>
+<pagination-controls  class="position-relative" (pageChange)="pageActual = $event"></pagination-controls>

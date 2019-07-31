@@ -15,14 +15,21 @@ import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { ConsultasComponent } from './components/admin/consultas/consultas.component';
 import { PlatilloComponent } from './components/platillo/platillo.component';
-
+import { VentasComponent } from './components/admin/ventas/ventas.component';
+import { RideComponent } from './components/clasificacionPlatos/ride/ride.component';
+import { CrashComponent } from './components/clasificacionPlatos/crash/crash.component';
+import { HithatComponent } from './components/clasificacionPlatos/hithat/hithat.component';
 const routes: Routes = [
   { path: '', component: PrincipalPlatilloComponent },
   { path: 'platillo', component: PlatilloComponent},
+  { path: 'ride', component: RideComponent},
+  { path: 'crash', component: CrashComponent },
+  { path: 'hithat', component: HithatComponent},
   { path: 'admin', component: AdminComponent },
-  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent, canActivate: [AdminGuard] },//solo adm
+  { path: 'admin/cargar-platillo', component: CargarPlatilloComponent, canActivate: [AdminGuard] },
   { path: 'admin/editar-platillo', component: EditarPlatilloComponent, canActivate: [AdminGuard] },
   { path: 'admin/users', component: UsersComponent, canActivate: [AdminGuard]},
+  { path: 'admin/ventas', component: VentasComponent, canActivate: [AdminGuard]},
   { path: 'admin/consultas', component: ConsultasComponent },
   { path: 'platillo/:id', component: DetallePlatilloComponent},
   { path: 'user/login', component: LoginComponent },

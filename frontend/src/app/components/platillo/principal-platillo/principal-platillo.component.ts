@@ -28,7 +28,27 @@ export class PrincipalPlatilloComponent implements OnInit {
   getPlatillos() {
     this.platilloService.getPlatillos().subscribe(res => {
       this.platilloService.platillos = res as Platillo[];
-      console.log(res);
+      this.platilloService.platillos.forEach(plato => {
+        switch (plato.categoria) {
+          case 'Ride': {
+            this.platilloService.ride.push(plato);
+            console.log('RIDE');
+            }
+            break;
+          case 'Hit-Hat': {
+            this.platilloService.hithat.push(plato);
+            console.log('Hit-Hat');
+            }
+            break;
+          case 'Crash': {
+            this.platilloService.crash.push(plato);
+            console.log('Crash');
+          }
+          break;
+        }
+      });
+      console.log('Ride', this.platilloService.ride);
+      console.log('HitHat', this.platilloService.hithat);
     });
   }
 

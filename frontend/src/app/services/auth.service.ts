@@ -12,7 +12,7 @@ import { UsuarioService} from './usuario.service';
 export class AuthService {
 
   public isAdmn = false;
-  public isLogged: Boolean;
+  public isLogged = false;
 
   constructor(private afsAuth: AngularFireAuth, private userS: UsuarioService, private authService: AuthService) {
   }

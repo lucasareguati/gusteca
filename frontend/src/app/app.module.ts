@@ -26,6 +26,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { UsersComponent } from './components/admin/users/users.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ConsultasComponent } from './components/admin/consultas/consultas.component';
+import { VentasComponent } from './components/admin/ventas/ventas.component';
+import { CrashComponent } from './components/clasificacionPlatos/crash/crash.component';
+import { RideComponent } from './components/clasificacionPlatos/ride/ride.component';
+import { HithatComponent } from './components/clasificacionPlatos/hithat/hithat.component';
 
 
 
@@ -47,6 +51,10 @@ import { ConsultasComponent } from './components/admin/consultas/consultas.compo
     FooterComponent,
     UsersComponent,
     ConsultasComponent,
+    VentasComponent,
+    CrashComponent,
+    RideComponent,
+    HithatComponent,
   ],
   imports: [
     FormsModule,
@@ -62,6 +70,7 @@ import { ConsultasComponent } from './components/admin/consultas/consultas.compo
   ],
   providers: [AngularFireAuth,
   NavbarComponent,
+  PrincipalPlatilloComponent,
   ConsultasComponent],
   schemas: [NO_ERRORS_SCHEMA],
   bootstrap: [AppComponent],
